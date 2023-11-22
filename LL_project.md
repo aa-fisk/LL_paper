@@ -86,3 +86,32 @@ integration?)
 - Convert chapter into word for VV/SNP?
 - Save the tex file into its own separate project dir?
 - Update code to make prettier
+
+
+Analysis files taken from 
+/Users/angusfisk/Documents/01_personal_files/01_work/01_dphil/01_projects/01_thesisdata
+
+
+
+
+
+Questions
+
+Do I want to version control data files?
+    - Definitely not all
+    - Do I want originals? 
+    - Not now, can add in later 
+    - done added to gitignore.
+Version control code 
+    - Don't have to worry about intermediates as already covered by \*.png
+    - ignore csvs as well
+Write pipeline 
+    - best version in deprec implement at the moment 
+
+Next step? 
+    - Remove excess to tidy up dirs? 
+    - Just get going as is?
+    - New branch almost definitely then tidy from there 
+
+- Need to remove edf and raf files? From deprec? - remove all _deprec
+    
