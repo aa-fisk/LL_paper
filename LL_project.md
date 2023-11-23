@@ -34,8 +34,8 @@ LL_project
         - Simulate new data to test analysis plan?
 
 ## Next steps 
-- Version control writing and code (separate repos?)
-- Get tex file to compile
+- Version control writing and code (separate repos?) - done 2023-11-22
+- Get tex file to compile - done 2023-11-22
 - Produce figures using current code 
 
 ## Ideas as things go along/notes
@@ -55,24 +55,6 @@ integration?)
 
 ## Ideas to keep
 - Ideas graveyard?
-    - Convert into word somehow
-        - Pandoc
-            - Write custom stylesheet to use? Figure out what was 
-            not working last time?
-        - Question to work in word or latex?
-        - Need a word version to use 
-            - So either work directly in word version
-                - Poor version control/experience
-            - Convert between word and tex version
-                - Should be easy?
-                - References?
-                - Looking pretty? 
-                - https://en.wikibooks.org/wiki/LaTeX/Collaborative_Writing_of_LaTeX_Documents
-        - What about using Rmarkdown instead of tex?
-            - Seems easier? 
-            - https://rmarkdown.rstudio.com/articles_docx.html
-            - Guide uses RStudio
-            - How to do straight from file?
     - Rewrite what currently have
         - Increase introduction so have enough info for published paper
     - More data?    
@@ -105,6 +87,12 @@ Write pipeline
 Okay so have all the original files tracked and staged well
 what now? 
 Tidy? What would that look like? 
-Go back to main branch and create new branch that we will then work on ?  
-Happy to merge back with main?
+
+What are we working on now? What do we want to name this branch?
+
+- get tex file compiling to PDF as well
+- Add in and rename what necessary to convert to/from word and pdf  
+    - need the bibliography and the reference doc and the code
+- get code working to create all figures
+    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc
 
