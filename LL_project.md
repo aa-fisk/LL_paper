@@ -83,16 +83,19 @@ Questions
 
 Write pipeline 
     - best version in deprec implement at the moment 
+What about citations in markdown/Rmarkdown?
 
-Okay so have all the original files tracked and staged well
-what now? 
-Tidy? What would that look like? 
 
 What are we working on now? What do we want to name this branch?
 
 - get tex file compiling to PDF as well
+    - okay converting back to tex doesn't work very well 
 - Add in and rename what necessary to convert to/from word and pdf  
     - need the bibliography and the reference doc and the code
 - get code working to create all figures
-    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc
 
+
+Convert to docx 
+    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc
+Convert back to tex
+    pandoc 02_chapter3.docx -o 03_ch3_backtotex.tex
