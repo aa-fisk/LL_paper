@@ -100,11 +100,17 @@ Current problem - code_check
 - Run preprocessing
 - Run figures 
 
+- Activate environment 
+    - used sleePy_environment
+    - Find and put in analysis file?
+    - Also want to update actipy and sleepy packages but can deal with later
 
 
 
 
 Convert to docx 
-    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc
-Convert back to tex
-    pandoc 02_chapter3.docx -o 03_ch3_backtotex.tex
+    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc --link-citations=True
+Convert back to md
+    pandoc 02_chapter3.docx -o 03_ch3.md --citeproc --bibliography=thesis_references.bib --link-citations=True
+Create environment
+
