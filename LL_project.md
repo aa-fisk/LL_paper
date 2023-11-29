@@ -104,6 +104,12 @@ Current problem - code_check
     - used sleePy_environment
     - Find and put in analysis file?
     - Also want to update actipy and sleepy packages but can deal with later
+- Environment solving environment failed
+    - Resolve package not found 
+        - python 3.7?
+    - Check basic conda formatting?
+    - Update anaconda to use m1 natively and no longer use miniforge
+
 
 
 
