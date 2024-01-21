@@ -40,12 +40,16 @@ LL_project
 - Produce figures using current code 
 
 ## Scripts to use
-Convert to docx 
-    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc --link-citations=True
-Convert back to md
-    pandoc 02_chapter3.docx -o 03_ch3.md --citeproc --bibliography=thesis_references.bib --link-citations=True
-Create environment
 
+###Convert to docx 
+    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc --link-citations=True
+###Convert back to md
+    pandoc 02_chapter3.docx -o 03_ch3.md --citeproc --bibliography=thesis_references.bib --link-citations=True
+###Create environment
+CONDA_SUBDIR=osx-64 conda env create -f environment.yml
+
+### Run preprocessing
+python 02_analysis/01_preprocessing/01_clean_fft.py
 
 
 
@@ -107,22 +111,15 @@ Current problem - code_check
 - Run preprocessing
 - Run figures 
 
-- Activate environment 
-    - used sleePy_environment
-    - Find and put in analysis file?
-    - Also want to update actipy and sleepy packages but can deal with later
-- Environment solving environment failed
-    - Resolve package not found 
-        - python 3.7?
-    - Check basic conda formatting?
-    - Update anaconda to use m1 natively and no longer use miniforge
-    - updated to 23.10.0
-    - Problem with packages not available for arm
-        - https://stackoverflow.com/questions/76879889/conda-package-not-found-how-to-install-conda-packages-on-apple-m1-m2-chips-whi  
-        - Go through and try updated package individually?
-        - Try CONDA_SUBDIR=osx-64 conda env create -f environment.yml
 
-
-
+- Activated environment
+- now try and run preprocessing 
+    - Did not work straight away!
+    - filenotfound error 
+    - run in console
+        - Manually coded path
+        - rewrite to be relative filepath
+- 01_clean_fft.py - done 
+- 
 
 
