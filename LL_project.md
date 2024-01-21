@@ -50,8 +50,7 @@ CONDA_SUBDIR=osx-64 conda env create -f environment.yml
 
 ### Run preprocessing
 python 02_analysis/01_preprocessing/01_clean_fft.py
-
-
+python 02_analysis/01_preprocessing/02_stage_file.py
 
 # Extra stuff to keep but not current use
 

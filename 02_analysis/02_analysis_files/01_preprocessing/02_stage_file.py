@@ -2,14 +2,10 @@
 import pathlib
 import sys
 import pandas as pd
-sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
-                   "07_python_package/sleepPy")
 import sleepPy.preprocessing as prep
 
 # define dirs
-input_dir = pathlib.Path("/Users/angusfisk/Documents/01_PhD_files/01_projects"
-                         "/01_thesisdata/03_lleeg/01_data_files"
-                         "/07_clean_fft_files")
+input_dir = pathlib.Path("../../01_data_files/07_clean_fft_files")
 subdir_name = "08_stage_csv"
 save_dir = input_dir.parent / subdir_name
 
