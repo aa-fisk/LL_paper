@@ -1,6 +1,7 @@
 LL_project
 
 
+
 # Overall plan 
 - 3 separate projects
     - Turn what I have into a basic thing that can be published as is
@@ -38,6 +39,18 @@ LL_project
 - Get tex file to compile - done 2023-11-22
 - Produce figures using current code 
 
+## Scripts to use
+Convert to docx 
+    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc --link-citations=True
+Convert back to md
+    pandoc 02_chapter3.docx -o 03_ch3.md --citeproc --bibliography=thesis_references.bib --link-citations=True
+Create environment
+
+
+
+
+# Extra stuff to keep but not current use
+
 ## Ideas as things go along/notes
 - Write dimensions/structure of data in notes? 
 - Write workflow in notes
@@ -53,23 +66,7 @@ integration?)
 - include blurb in code of why looking at?
 
 
-## Ideas to keep
-- Ideas graveyard?
-    - Rewrite what currently have
-        - Increase introduction so have enough info for published paper
-    - More data?    
-        - Who would let us use sleep score?
-        - Joel Raymond at USYD? 
-        https://www.sydney.edu.au/science/about/our-people/research-students/joel-raymond-543.html
-
-
-
-- Write paper
-- Convert chapter into word for VV/SNP?
-- Save the tex file into its own separate project dir?
-- Update code to make prettier
-
-
+# Reference Info
 Writing files taken from 
 /Users/angusfisk/Dropbox/01_PhD_things/02_Projects/06_thesis/03_lleeg
 Analysis files taken from 
@@ -78,16 +75,25 @@ Analysis files taken from
 
 
 
+# Working notes 
 
-Questions
+## Questions/Ideas
+- Ideas graveyard?
+    - Rewrite what currently have
+        - Increase introduction so have enough info for published paper
+    - More data?    
+        - Who would let us use sleep score?
+        - Joel Raymond at USYD? 
+        https://www.sydney.edu.au/science/about/our-people/research-students/joel-raymond-543.html
+- What about citations in markdown/Rmarkdown?
+
+
+## Current
 
 Write pipeline 
     - best version in deprec implement at the moment 
-What about citations in markdown/Rmarkdown?
 
-
-What are we working on now? What do we want to name this branch?
-
+### Tex conversion 
 - get tex file compiling to PDF as well
     - okay converting back to tex doesn't work very well 
 - Add in and rename what necessary to convert to/from word and pdf  
@@ -95,6 +101,7 @@ What are we working on now? What do we want to name this branch?
 - get code working to create all figures
 
 
+## Code produce
 Current problem - code_check
 - Create environment file
 - Run preprocessing
@@ -109,14 +116,13 @@ Current problem - code_check
         - python 3.7?
     - Check basic conda formatting?
     - Update anaconda to use m1 natively and no longer use miniforge
+    - updated to 23.10.0
+    - Problem with packages not available for arm
+        - https://stackoverflow.com/questions/76879889/conda-package-not-found-how-to-install-conda-packages-on-apple-m1-m2-chips-whi  
+        - Go through and try updated package individually?
+        - Try CONDA_SUBDIR=osx-64 conda env create -f environment.yml
 
 
 
 
-
-Convert to docx 
-    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc --link-citations=True
-Convert back to md
-    pandoc 02_chapter3.docx -o 03_ch3.md --citeproc --bibliography=thesis_references.bib --link-citations=True
-Create environment
 
