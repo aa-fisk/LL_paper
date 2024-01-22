@@ -111,14 +111,14 @@ Current problem - code_check
 - Run figures 
 
 
-- Activated environment
-- now try and run preprocessing 
-    - Did not work straight away!
-    - filenotfound error 
-    - run in console
-        - Manually coded path
-        - rewrite to be relative filepath
-- 01_clean_fft.py - done 
+- All Preprocessing done
+- Create figures/other outputs 
+- Individual animals graphs ?
+- Then figures
+- 02_plot_delta_hypnograms.py - working
 - 
+
+
+
 
 
