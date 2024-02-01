@@ -91,6 +91,7 @@ Analysis files taken from
 - What about citations in markdown/Rmarkdown?
 
 
+
 ## Current
 
 Write pipeline 
@@ -116,9 +117,20 @@ Current problem - code_check
 - Individual animals graphs ?
 - Then figures
 - 02_plot_delta_hypnograms.py - working
-- 
-
-
-
+- Will we run into problems if running from parent dir? 
+- Cumulative plots
+    - Bool value ambiguous 
+    - Is "processed" in data_list
+        - but data list is a dataframe?
+        - what is expected?
+        - Why are we getting something diff?
+        - what does it mean by "Processed" in data_list 
+            - Checking if it has a dirname instead of a list of dataframes
+        - so, ambiguous because not sure if processed, obviously not? 
+        - change in core python behaviour - don't think so?
+        - okay so options, change actiPy - eurgh big pain
+        - Enough for now - come back to problem later, brain too hurt
+- Figures instead
+    - Fig 1 updated and working 
 
 
