@@ -132,5 +132,23 @@ Current problem - code_check
         - Enough for now - come back to problem later, brain too hurt
 - Figures instead
     - Fig 1 updated and working
-    - Fig 2 updated and working 
+    - Fig 2 updated and working
+    - Fig 3 throwing error - baseline_0 Key error ?
+        - Something about days?
+        - Problem is looking for "Baseline_0" when index has "Baseline_-0"
+        - where is index being created in file?
+        - where on earth is anim_df coming from? 
+            - being used to define function 
+            - then applied to delta_mean_hr_norm.groupby(level=0).apply(norm)
+        - Got working by changing default string 
+            - might be problem later when plotting? - why diff now when 
+            fine previously?
+        - now throwing problem with pingouin statistics - eigenvalue did
+        not converge?
+            - Apparently having 0 is causing problems 
+            - My data does not have 0s?
+            - check data types/columns using
+                - all float64?
+            - problem with the baselines being at 100% ?
+            - check pingouin version?
 
