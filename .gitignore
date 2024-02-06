@@ -1,0 +1,42 @@
+# Figures
+
+**/*.png
+**/*.tif
+
+# pdfs
+
+**/*.pdf
+
+# word files 
+
+**/*.docx
+
+# powerpoint figure 
+
+**/*.pptx
+
+# Tex intermediate files 
+
+**/*.aux
+**/*.log
+**/*.dvi
+
+# All data files 
+
+02_analysis/01_data_files/*
+
+# Statistics outputs
+
+**/*.csv
+**/*csv*/**
+
+# all deprec implement which includes data files 
+
+**/_deprec_implement/**
+
+#ipynb
+
+**/*ipynb*/**
+
+# Notes file - makes so have to force 
+LL_project.md

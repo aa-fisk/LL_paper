@@ -1,16 +1,13 @@
 # script to run to check remove header working as expected
 import pathlib
 import sys
-sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
-                   "07_python_package/sleepPy")
 import sleepPy.preprocessing as prep
 import sleepPy.plots as plot
 import seaborn as sns
 sns.set()
 
 # define import dir
-input_dir = pathlib.Path("/Users/angusfisk/Documents/01_PhD_files/01_projects"
-                         "/P3_LLEEG_Chapter3/01_data_files/07_clean_fft_files/")
+input_dir = pathlib.Path("../../01_data_files/07_clean_fft_files")
 save_dir = input_dir.parents[1]
 subdir_name = "01_data_files/08_stage_csv"
 plot_subdir_name = "03_analysis_outputs/02_cumulative_plots/01_cumulative_sleep"

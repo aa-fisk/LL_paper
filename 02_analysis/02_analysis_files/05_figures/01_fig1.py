@@ -9,22 +9,18 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
 import matplotlib.dates as mdates
 import sys
-sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
-                "07_python_package/actiPy")
 import actiPy.actogram_plot as aplot
 import actiPy.preprocessing as prep
 import actiPy.periodogram as per
 
 fig_dir = pathlib.Path(
-    "/Users/angusfisk/Documents/01_PhD_files/01_projects/01_thesisdata/"
-    "03_lleeg/03_analysis_outputs/05_figures/01_fig1"
+   "../../03_analysis_outputs/05_figures/01_fig1" 
 )
 
 # Import data
 index_cols = [0]
 pir_dir = pathlib.Path(
-    "/Users/angusfisk/Documents/01_PhD_files/01_projects/01_thesisdata/03_lleeg"
-    "/01_data_files/10_pirfiles"
+    "../../01_data_files/10_pirfiles"
 )
 file_names = sorted(pir_dir.glob("*.csv"))
 stem_names = [x.stem for x in file_names]

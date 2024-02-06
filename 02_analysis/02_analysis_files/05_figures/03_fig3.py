@@ -14,8 +14,6 @@ import seaborn as sns
 sns.set()
 import pathlib
 import sys
-sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
-                   "07_python_package/sleepPy")
 import sleepPy.preprocessing as prep
 import sleepPy.plots as plot
 
@@ -24,20 +22,12 @@ INDEX_COLS = [0, 1, 2]
 idx = pd.IndexSlice
 BASE_FREQ = "4S"
 OFFSET = pd.Timedelta("30m")
-SAVEFIG = pathlib.Path(
-    "/Users/angusfisk/Documents/01_PhD_files/01_projects/"
-    "01_thesisdata/03_lleeg/03_analysis_outputs/05_figures/"
-    "03_fig3.png"
-)
+SAVEFIG = pathlib.Path("../../03_analysis_outputs/05_figures/03_fig3.png")
 
 # Step 1 Import files and tidy #################################################
 
 # Read all Spectral files into a df
-file_dir = pathlib.Path(
-    '/Users/angusfisk/Documents/01_PhD_files/01_projects/'
-    '01_thesisdata/03_lleeg/01_data_files'
-    '/07_clean_fft_files'
-)
+file_dir = pathlib.Path('../../01_data_files/07_clean_fft_files')
 file_names = sorted(file_dir.glob("*.csv"))
 df_list = [prep.read_file_to_df(x, index_col=INDEX_COLS) for x in file_names]
 df_names = [x.name for x in df_list]
@@ -46,11 +36,7 @@ spectrum_df = pd.concat(df_dict)
 spectrum_df = spectrum_df.loc[idx["LL2":, :"LL_day2", :], :]
 
 # Read the stage df
-stage_dir = pathlib.Path(
-    '/Users/angusfisk/Documents/01_PhD_files/01_projects/'
-    '01_thesisdata/03_lleeg/01_data_files'
-    '/08_stage_csv'
-)
+stage_dir = pathlib.Path('../../01_data_files/08_stage_csv')
 stage_names = sorted(stage_dir.glob("*.csv"))
 stage_list = [
     prep.read_file_to_df(x, index_col=[0]) for x in stage_names
@@ -200,7 +186,7 @@ delta_mean_hr = delta_mean_nrem.groupby(
 ).mean()
 # normalise to baseline
 def norm_to_base(anim_df,
-                 baseline_str: str="Baseline_0"):
+                 baseline_str: str="Baseline_-0"):
     base_values = anim_df.loc[idx[:, baseline_str, :], :]
     normalise_values = base_values.mean()
     normalised_df = (anim_df / normalise_values) * 100
@@ -246,11 +232,8 @@ anim = stat_colnames[0]
 hour_col = stat_colnames[1]
 day_col = stat_colnames[2]
 hours = hourly_sleep_prop.index.get_level_values(-1).unique()
-save_test_dir = pathlib.Path(
-    "/Users/angusfisk/Documents/01_PhD_files/"
-    "01_projects/01_thesisdata/03_lleeg/"
-    "03_analysis_outputs/05_figures/00_csvs/03_fig3"
-)
+save_test_dir = pathlib.Path("../../"
+                             "03_analysis_outputs/05_figures/00_csvs/03_fig3")
 anova_csv = "01_anova.csv"
 ph_csv = "02_posthoc.csv"
 

@@ -1,6 +1,7 @@
 LL_project
 
 
+
 # Overall plan 
 - 3 separate projects
     - Turn what I have into a basic thing that can be published as is
@@ -38,6 +39,21 @@ LL_project
 - Get tex file to compile - done 2023-11-22
 - Produce figures using current code 
 
+## Scripts to use
+
+###Convert to docx 
+    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc --link-citations=True
+###Convert back to md
+    pandoc 02_chapter3.docx -o 03_ch3.md --citeproc --bibliography=thesis_references.bib --link-citations=True
+###Create environment
+CONDA_SUBDIR=osx-64 conda env create -f environment.yml
+
+### Run preprocessing
+python 02_analysis/01_preprocessing/01_clean_fft.py
+python 02_analysis/01_preprocessing/02_stage_file.py
+
+# Extra stuff to keep but not current use
+
 ## Ideas as things go along/notes
 - Write dimensions/structure of data in notes? 
 - Write workflow in notes
@@ -53,23 +69,7 @@ integration?)
 - include blurb in code of why looking at?
 
 
-## Ideas to keep
-- Ideas graveyard?
-    - Rewrite what currently have
-        - Increase introduction so have enough info for published paper
-    - More data?    
-        - Who would let us use sleep score?
-        - Joel Raymond at USYD? 
-        https://www.sydney.edu.au/science/about/our-people/research-students/joel-raymond-543.html
-
-
-
-- Write paper
-- Convert chapter into word for VV/SNP?
-- Save the tex file into its own separate project dir?
-- Update code to make prettier
-
-
+# Reference Info
 Writing files taken from 
 /Users/angusfisk/Dropbox/01_PhD_things/02_Projects/06_thesis/03_lleeg
 Analysis files taken from 
@@ -78,21 +78,79 @@ Analysis files taken from
 
 
 
+# Working notes 
 
-Questions
+## Questions/Ideas
+- Ideas graveyard?
+    - Rewrite what currently have
+        - Increase introduction so have enough info for published paper
+    - More data?    
+        - Who would let us use sleep score?
+        - Joel Raymond at USYD? 
+        https://www.sydney.edu.au/science/about/our-people/research-students/joel-raymond-543.html
+- What about citations in markdown/Rmarkdown?
+
+
+
+## Current
 
 Write pipeline 
     - best version in deprec implement at the moment 
 What about citations in markdown/Rmarkdown?
 
-
-What are we working on now? What do we want to name this branch?
-
+### Tex conversion 
 - get tex file compiling to PDF as well
     - okay converting back to tex doesn't work very well 
 - Add in and rename what necessary to convert to/from word and pdf  
     - need the bibliography and the reference doc and the code
 - get code working to create all figures
+
+
+## Code produce
+Current problem - code_check
+- Create environment file
+- Run preprocessing
+- Run figures 
+
+
+- All Preprocessing done
+- Create figures/other outputs 
+- Individual animals graphs ?
+- Then figures
+- 02_plot_delta_hypnograms.py - working
+- Will we run into problems if running from parent dir? 
+- Cumulative plots
+    - Bool value ambiguous 
+    - Is "processed" in data_list
+        - but data list is a dataframe?
+        - what is expected?
+        - Why are we getting something diff?
+        - what does it mean by "Processed" in data_list 
+            - Checking if it has a dirname instead of a list of dataframes
+        - so, ambiguous because not sure if processed, obviously not? 
+        - change in core python behaviour - don't think so?
+        - okay so options, change actiPy - eurgh big pain
+        - Enough for now - come back to problem later, brain too hurt
+- Figures instead
+    - Fig 2 updated and working
+    - Fig 3 throwing error - baseline_0 Key error ?
+        - Something about days?
+        - Problem is looking for "Baseline_0" when index has "Baseline_-0"
+        - where is index being created in file?
+        - where on earth is anim_df coming from? 
+            - being used to define function 
+            - then applied to delta_mean_hr_norm.groupby(level=0).apply(norm)
+        - Got working by changing default string 
+            - might be problem later when plotting? - why diff now when 
+            fine previously?
+        - now throwing problem with pingouin statistics - eigenvalue did
+        not converge?
+            - Apparently having 0 is causing problems 
+            - My data does not have 0s?
+            - check data types/columns using
+                - all float64?
+            - problem with the baselines being at 100% ?
+            - check pingouin version?
 
 
 Convert to docx 
