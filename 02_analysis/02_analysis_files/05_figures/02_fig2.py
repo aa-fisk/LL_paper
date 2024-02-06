@@ -11,9 +11,6 @@ import seaborn as sns
 sns.set()
 import pathlib
 import sys
-
-sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
-                   "07_python_package/sleepPy")
 import sleepPy.preprocessing as prep
 import sleepPy.plots as plot
 
@@ -21,15 +18,11 @@ import sleepPy.plots as plot
 INDEX_COLS = [0, 1, 2]
 idx = pd.IndexSlice
 BASE_FREQ = "4S"
-SAVEFIG = pathlib.Path("/Users/angusfisk/Documents/01_PhD_files/01_projects/"
-                       "01_thesisdata/03_lleeg/03_analysis_outputs/05_figures/"
-                       "02_fig2.png")
+SAVEFIG = pathlib.Path("../../03_analysis_outputs/05_figures/02_fig2.png")
 
 
 ######### Step 1 Import the files
-file_dir = pathlib.Path('/Users/angusfisk/Documents/01_PhD_files/01_projects/'
-                        '01_thesisdata/03_lleeg/01_data_files'
-                        '/07_clean_fft_files')
+file_dir = pathlib.Path('../../01_data_files/07_clean_fft_files')
 file_names = sorted(file_dir.glob("*7*.csv"))
 df_list = [prep.read_file_to_df(x, index_col=INDEX_COLS) for x in file_names]
 df_names = [x.name for x in df_list]
@@ -38,9 +31,7 @@ spectrum_df = pd.concat(df_dict)
 spectrum_df = spectrum_df.loc[idx[:, :"LL_day2", :], :]
 
 # same thing with stage df
-stage_dir = pathlib.Path('/Users/angusfisk/Documents/01_PhD_files/01_projects/'
-                         '01_thesisdata/03_lleeg/01_data_files'
-                         '/08_stage_csv')
+stage_dir = pathlib.Path('../../01_data_files/08_stage_csv')
 stage_names = sorted(stage_dir.glob("*.csv"))
 stage_list = [prep.read_file_to_df(x, index_col=[0]) for x in
               stage_names]
@@ -115,8 +106,7 @@ totals_df = pd.concat(totals_dict)
 # Not doing 2 way as the markers are all inter-related
 
 # stat constants
-save_test_dir = pathlib.Path("/Users/angusfisk/Documents/01_PhD_files/"
-                             "01_projects/01_thesisdata/03_lleeg/"
+save_test_dir = pathlib.Path("../../"
                              "03_analysis_outputs/05_figures/00_csvs/02_fig2")
 stat_colnames = ["Day", "Animal", "Time", "Value"]
 dep_var = stat_colnames[-1]
