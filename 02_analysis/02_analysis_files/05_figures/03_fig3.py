@@ -186,7 +186,7 @@ delta_mean_hr = delta_mean_nrem.groupby(
 ).mean()
 # normalise to baseline
 def norm_to_base(anim_df,
-                 baseline_str: str="Baseline_-0"):
+                 baseline_str: str="Baseline_0"):
     base_values = anim_df.loc[idx[:, baseline_str, :], :]
     normalise_values = base_values.mean()
     normalised_df = (anim_df / normalise_values) * 100
