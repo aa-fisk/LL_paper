@@ -131,6 +131,19 @@ Current problem - code_check
         - okay so options, change actiPy - eurgh big pain
         - Enough for now - come back to problem later, brain too hurt
 - Figures instead
-    - Fig 1 updated and working 
+    - Fig 1 updated and working
+    - Fig 2 create_df_for_single_band requiring sum keyword 
+        - In local dir but not public one
+        - Options
+            - Link hardcoded path to new version
+            - Upload to new github account and set that to new env path
+                - Problem if new stuff has conflicts, but always a risk
 
-
+- Update on new github accoun
+    - Made new account
+    - Set URL as origin
+    - Got all working, now to update environment file        
+        - working for sleepPy
+    - now for actiPy
+        - Then update environment file
+        - Then get back to running fig 2

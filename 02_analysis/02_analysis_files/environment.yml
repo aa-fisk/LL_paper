@@ -18,5 +18,5 @@ dependencies:
 - astropy == 3.1
 - pip
 - pip:
-  - git+https://github.com/A-Fisk/sleepPy.git@master
-  - git+https://github.com/A-Fisk/actiPy.git@master
+  - git+https://github.com/aa-fisk/sleepPy.git@main
+  - git+https://github.com/aa-fisk/actiPy.git@main
