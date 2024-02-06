@@ -14,12 +14,8 @@ import seaborn as sns
 sns.set()
 import pathlib
 import sys
-sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
-                   "07_python_package/sleepPy")
 import sleepPy.preprocessing as prep
 import sleepPy.plots as plot
-sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
-                   "07_python_package/actiPy")
 import actiPy.episodes as ep
 import actiPy.preprocessing as aprep
 
@@ -27,20 +23,12 @@ import actiPy.preprocessing as aprep
 INDEX_COLS = [0, 1, 2]
 idx = pd.IndexSlice
 BASE_FREQ = "4S"
-SAVEFIG = pathlib.Path(
-    "/Users/angusfisk/Documents/01_PhD_files/01_projects/"
-    "01_thesisdata/03_lleeg/03_analysis_outputs/05_figures/"
-    "04_fig4.png"
-)
+SAVEFIG = pathlib.Path("../../03_analysis_outputs/05_figures/04_fig4.png")
 OFFSET = pd.Timedelta("30M")
 
 # Step 1 Import files and tidy
 # need both stage csvs and spectral
-file_dir = pathlib.Path(
-    '/Users/angusfisk/Documents/01_PhD_files/01_projects/'
-    '01_thesisdata/03_lleeg/01_data_files'
-    '/07_clean_fft_files'
-)
+file_dir = pathlib.Path('../../01_data_files/07_clean_fft_files')
 file_names = sorted(file_dir.glob("*.csv"))
 df_list = [prep.read_file_to_df(x,
                                 parse_dates=True,
@@ -53,11 +41,7 @@ spectrum_df = spectrum_df.sort_index()
 spectrum_df = spectrum_df.loc[idx["LL2":, :"LL_day2", :], :]
 
 # same with stage df
-stage_dir = pathlib.Path(
-    '/Users/angusfisk/Documents/01_PhD_files/01_projects/'
-    '01_thesisdata/03_lleeg/01_data_files'
-    '/08_stage_csv'
-)
+stage_dir = pathlib.Path('../../01_data_files/08_stage_csv')
 stage_names = sorted(stage_dir.glob("*.csv"))
 stage_list = [
     prep.read_file_to_df(x,
@@ -154,10 +138,8 @@ long_frag["Mean"] = long_mean.iloc[:, -1]
 
 # Stats ########################################################################
 
-save_test_dir = pathlib.Path(
-    "/Users/angusfisk/Documents/01_PhD_files/01_projects/01_thesisdata"
-    "/03_lleeg/03_analysis_outputs/05_figures/00_csvs/04_fig4"
-)
+save_test_dir = pathlib.Path("../../"
+                             "03_analysis_outputs/05_figures/00_csvs/04_fig4")
 
 # Q1 Does power of the spectrum change between days
 # Repeated two way ANOVA of Power ~ Freq*days | anim

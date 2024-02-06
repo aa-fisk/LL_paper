@@ -134,6 +134,7 @@ Current problem - code_check
 - Figures instead
     - Fig 2 updated and working
     - Fig 3 Updated and working 
+    - Fig 4 updated and working 
 
 
 
