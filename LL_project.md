@@ -37,7 +37,7 @@ LL_project
 ## Next steps 
 - Version control writing and code (separate repos?) - done 2023-11-22
 - Get tex file to compile - done 2023-11-22
-- Produce figures using current code 
+- Produce figures using current code - Done 2024-02-07
 
 ## Scripts to use
 
@@ -89,6 +89,18 @@ Analysis files taken from
         - Joel Raymond at USYD? 
         https://www.sydney.edu.au/science/about/our-people/research-students/joel-raymond-543.html
 - What about citations in markdown/Rmarkdown?
+- Cumulative plots
+    - Bool value ambiguous 
+    - Is "processed" in data_list
+        - but data list is a dataframe?
+        - what is expected?
+        - Why are we getting something diff?
+        - what does it mean by "Processed" in data_list 
+            - Checking if it has a dirname instead of a list of dataframes
+        - so, ambiguous because not sure if processed, obviously not? 
+        - change in core python behaviour - don't think so?
+        - okay so options, change actiPy - eurgh big pain
+        - Enough for now - come back to problem later, brain too hurt
 
 
 
@@ -105,40 +117,13 @@ What about citations in markdown/Rmarkdown?
     - need the bibliography and the reference doc and the code
 - get code working to create all figures
 
+### Writing
 
-## Code produce
-Current problem - code_check
-- Create environment file
-- Run preprocessing
-- Run figures 
-
-
-- All Preprocessing done
-- Create figures/other outputs 
-- Individual animals graphs ?
-- Then figures
-- 02_plot_delta_hypnograms.py - working
-- Will we run into problems if running from parent dir? 
-- Cumulative plots
-    - Bool value ambiguous 
-    - Is "processed" in data_list
-        - but data list is a dataframe?
-        - what is expected?
-        - Why are we getting something diff?
-        - what does it mean by "Processed" in data_list 
-            - Checking if it has a dirname instead of a list of dataframes
-        - so, ambiguous because not sure if processed, obviously not? 
-        - change in core python behaviour - don't think so?
-        - okay so options, change actiPy - eurgh big pain
-        - Enough for now - come back to problem later, brain too hurt
-- Figures instead
-    - Fig 2 updated and working
-    - Fig 3 Updated and working 
-    - Fig 4 updated and working 
+Next step is getting to the point can edit the manuscript!?!?!
+Need to finish up the tex conversion, want in markdown format 
+with citations in it
 
 
 
-Convert to docx 
-    pandoc 01_chapter3.tex -o 02_chapter3.docx --reference-doc tex_word_custom_reference.docx --bibliography=thesis_references.bib --citeproc
-Convert back to tex
-    pandoc 02_chapter3.docx -o 03_ch3_backtotex.tex
+
+
