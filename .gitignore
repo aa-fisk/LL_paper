@@ -40,3 +40,6 @@
 
 # Notes file - makes so have to force 
 LL_project.md
+
+# swap files vim 
+*.swp
