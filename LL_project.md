@@ -1,5 +1,46 @@
 LL_project
 
+# Working notes 
+
+Writing
+- What do we need to  do/how change?
+- Read current version see what comes to mind
+
+- Need to condense down introduction
+- What does a good example look like?
+- Somnotate paper probably a good examplea
+    - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10824458/
+
+
+- Question
+- What evidence of constant light effects on sleep currently?
+    - new stuff since 2019 wrote
+- Want to read the Borbely effect of light on sleep paper
+- Duration, distribution, architecture, NREM/REM, episode duration, 
+intensity
+- 
+
+- https://pubmed.ncbi.nlm.nih.gov/31720718/
+    - agomelatin on constant sleep 
+
+- https://www.sciencedirect.com/science/article/pii/S0028390821002616?dgcid=api_sd_search-api-endpoint
+    - agomelatin on constant sleep
+    - question what is effect of constant sleep? k
+
+- https://www.sciencedirect.com/science/article/abs/pii/S0091305718301515
+    - Appears to be source of constant light effect in 
+    tchekalarova studies
+    - seem more interested in light at night rather than LL?
+    - Does not measure the effects on sleep/circadian, just on 
+    behavioural tests and melatonin/corticosterone
+    - In rats LL eliminates rhythmicity in melatonin and corticosterone
+    - Elevated corticosterone and supressed melatonin
+    - what about pulsatile corticosterone secretion?
+
+
+
+
+
 
 
 # Overall plan 
@@ -45,7 +86,6 @@ python 02_analysis/01_preprocessing/01_clean_fft.py
 python 02_analysis/01_preprocessing/02_stage_file.py
 
 
-# Working notes 
 
 
 
