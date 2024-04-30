@@ -5,18 +5,7 @@ LL_project
 # Overall plan 
 - 3 separate projects
     - Turn what I have into a basic thing that can be published as is
-        - Get what I have into its own dir 
-            - Writing 
-            - Data
-            - Code
-        - Convert to word
-        - Reproduce current paper successfully
-            - Compile tex file
-                - Edit to be standalone not part of bigger file
-            - Create figures 
-                - Create python environment and run files
-                - PPT based ones can leave as is
-        -     
+        - DONE 2024-04-30    
     - Improve what I have so tidied up enough to publish code/data 
     behind paper
         - Reformat?
@@ -35,13 +24,8 @@ LL_project
         - New data (Sleep score extra days)
         - Simulate new data to test analysis plan?
 
-## steps 
-- Version control writing and code (separate repos?) - done 2023-11-22
-- Get tex file to compile - done 2023-11-22
-- Produce figures using current code - Done 2024-02-07
 
-## Scripts to use
-
+## Scripts 
 
 ### 01 tex to md
 pandoc 01_chapter3.tex -o 02_ch3.md --bibliography=thesis_references.bib --citeproc -M link-citations=True
@@ -66,33 +50,6 @@ python 02_analysis/01_preprocessing/02_stage_file.py
 
 
 ## Current
-
-
-### Writing
-
-Next step is getting to the point can edit the manuscript!?!?!
-- Need to finish up the tex conversion, want in markdown format 
-  with citations in it
-- So converting to word from tex is working 
-    - Including citations 
-        - Inline/figures?
-- How about from word back to tex
-    - Including citations
-- Okay what is the problem I'm having
-    - How to convert citations from work to markdown in pandoc
-    - Have reference .bib file but doesn't want to work?
-    - Okay so something to do with the citations extension 
-        - https://pandoc.org/chunkedhtml-demo/7.6-other-extensions.html#org-citations
-        - How to enable the citations extension?
-        - Are the citations in the word fine formatted correctly as citations?
-        - Okay this seems to be the problem, renders them fine as 
-        bracketed citations but this format not picked up for conversion
-        back to markdown, hmmm
-        - how to render citations into docx so they keep @formatting 
-    - How about convert from .tex to markdown then back and forth from
-    word?
-
-
 
 ## Questions/Ideas
 - Ideas graveyard?
