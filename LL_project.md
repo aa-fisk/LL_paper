@@ -18,24 +18,12 @@ Writing
 - Want to read the Borbely effect of light on sleep paper
 - Duration, distribution, architecture, NREM/REM, episode duration, 
 intensity
+
+- Introduction, need to know what is the question.
+- What happens under constant light? - not good enough
+- LL causes arrythmicity and therefore want to see what the 
+effect is on sleep under arrhythmic/reduced rhythmic environments
 - 
-
-- https://pubmed.ncbi.nlm.nih.gov/31720718/
-    - agomelatin on constant sleep 
-
-- https://www.sciencedirect.com/science/article/pii/S0028390821002616?dgcid=api_sd_search-api-endpoint
-    - agomelatin on constant sleep
-    - question what is effect of constant sleep? k
-
-- https://www.sciencedirect.com/science/article/abs/pii/S0091305718301515
-    - Appears to be source of constant light effect in 
-    tchekalarova studies
-    - seem more interested in light at night rather than LL?
-    - Does not measure the effects on sleep/circadian, just on 
-    behavioural tests and melatonin/corticosterone
-    - In rats LL eliminates rhythmicity in melatonin and corticosterone
-    - Elevated corticosterone and supressed melatonin
-    - what about pulsatile corticosterone secretion?
 
 
 
@@ -64,6 +52,11 @@ intensity
         - New measures for the sleep
         - New data (Sleep score extra days)
         - Simulate new data to test analysis plan?
+
+# TODO
+- Make file
+- make convert to/from word
+- make run all scripts to generate figures?
 
 
 ## Scripts 
