@@ -21,9 +21,18 @@ intensity
 
 - Introduction, need to know what is the question.
 - What happens under constant light? - not good enough
+- Two process model of sleep
+- Difficult to distinguish differences between?
+    - Hmm what is known about that? 
 - LL causes arrythmicity and therefore want to see what the 
 effect is on sleep under arrhythmic/reduced rhythmic environments
-- 
+- LL causes arrhythmicity of behavioural rhythms and free running
+- LL causes ? Prolonged period/disrupted sleep? 
+    - There is a paper about this that I need to find
+- Light also can directly induce sleep in nocturnal rodents
+    - But diurnal? 
+    - Learnt?
+    - At what time of day?
 
 
 
