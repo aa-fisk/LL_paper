@@ -10,29 +10,23 @@ Writing
 - What does a good example look like?
 - Somnotate paper probably a good examplea
     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10824458/
-
+- probably need to know more about results/discussion
+before writing more intro
 
 - Question
-- What evidence of constant light effects on sleep currently?
-    - new stuff since 2019 wrote
-- Want to read the Borbely effect of light on sleep paper
-- Duration, distribution, architecture, NREM/REM, episode duration, 
-intensity
+- what am I arguing in this paper?
 
-- Introduction, need to know what is the question.
-- What happens under constant light? - not good enough
-- Two process model of sleep
-- Difficult to distinguish differences between?
-    - Hmm what is known about that? 
-- LL causes arrythmicity and therefore want to see what the 
-effect is on sleep under arrhythmic/reduced rhythmic environments
-- LL causes arrhythmicity of behavioural rhythms and free running
-- LL causes ? Prolonged period/disrupted sleep? 
-    - There is a paper about this that I need to find
-- Light also can directly induce sleep in nocturnal rodents
-    - But diurnal? 
-    - Learnt?
-    - At what time of day?
+Constant light increases sleep during subjective dark, with reduced
+power leading to normally maintained homeostasis
+Architecture? 
+What do I mean by this?
+Sleep episode duration and distribution?
+Power spectra
+Other ideas - read something like Mathildes paper
+
+
+- important point - not arrhythmic due to low light intensity
+100-120 lux super low LED light
 
 
 
@@ -66,6 +60,7 @@ effect is on sleep under arrhythmic/reduced rhythmic environments
 - Make file
 - make convert to/from word
 - make run all scripts to generate figures?
+- Remove underscores from variable names
 
 
 ## Scripts 
