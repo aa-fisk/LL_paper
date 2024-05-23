@@ -24,9 +24,26 @@ Sleep episode duration and distribution?
 Power spectra
 Other ideas - read something like Mathildes paper
 
-
 - important point - not arrhythmic due to low light intensity
 100-120 lux super low LED light
+Given this Ohta paper shows not desynchronised therefore what
+are we even doing?
+
+
+argh why do we care?
+How does this fit with what we know about sleep regulation?
+
+Homeostasis causes increased sleep need and intensity after 
+prolonged waking. 
+We see normal SWE with increased sleep therefore this cannot
+be due to increased homeostatic pressure.
+
+Circadian?
+Given see changes immediately, not enough time to cause 
+major change to circadian signal, should be robust to 
+short term changes as that's the entire point?
+How long does it take to cause disruption in the ohta paper?
+Housed under LL 3-5 months, arrythmic after 120 days!!!
 
 
 
