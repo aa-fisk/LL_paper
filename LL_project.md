@@ -18,11 +18,31 @@ before writing more intro
 
 Constant light increases sleep during subjective dark, with reduced
 power leading to normally maintained homeostasis
-Architecture? 
-What do I mean by this?
-Sleep episode duration and distribution?
-Power spectra
-Other ideas - read something like Mathildes paper
+
+Constant light causes sleep during first few hours of subjective dark
+- Cannot be homeostatic as no change
+- Can't be circadian as no change?
+- must be direct light induced 
+
+What does this sleep look like?
+- Homeostatic reduced power but maintained SWE
+- circadian ??? abnormal for time of day
+- direct 
+
+What do we care about what the sleep looks like? 
+- episode duration?
+- power spectra - delta power specifically?
+- Other ideas - read something like Mathildes paper
+
+What do we know about directly light induced sleep?
+- T1/7 etc. 
+- depends on circadian phase? 
+- What does power, episode duration
+- Direct effects previously described as masking circadian effects
+- Hubbard 2021
+- Does not require melanopsin Tsai 2009, but is stopped by loss 
+of iPRGCs 
+
 
 - important point - not arrhythmic due to low light intensity
 100-120 lux super low LED light
@@ -69,8 +89,9 @@ Housed under LL 3-5 months, arrythmic after 120 days!!!
                 - Stats
                 - Figures 
         - Make a clear workflow from primary data 
-        - New measures for the sleep
+        - New measures for the sleer
         - New data (Sleep score extra days)
+            - Somnotate
         - Simulate new data to test analysis plan?
 
 # TODO
