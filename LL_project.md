@@ -1,6 +1,27 @@
 LL_project
 
+
+# Aims
+- Publish LL paper
+## steps
+- update writing
+- Feedback vlad/stuart
+- sleep score extra days (somnotate)
+- Analyse data
+- submit for publication
+
+
+
+
 # Working notes 
+
+Okay writing feels a bit hard at the moment
+Why don't we start seeing if we can get somnotate to work?
+
+- Find the data?
+- Raw data? - I think it's only on hard drives? - check at home 
+    - Can't do any more on that from ehre 
+    
 
 Writing
 - What do we need to  do/how change?
@@ -18,6 +39,24 @@ before writing more intro
 
 Constant light increases sleep during subjective dark, with reduced
 power leading to normally maintained homeostasis
+- fine statement but basically only asking the question of what does
+constant light do? 
+
+- What question am I asking? 
+- what happens to sleep when we disrupt the circadian system?
+- circadian regulates sleep timing
+- constant light disrupts locomotor activity and circadian system
+- what happens to homeostatic process when not getting normal circadian 
+signals
+
+- Sleep regulated by homeostatic and circadian system
+- disruption of the circadian system has many negative effects 
+- constant light disrupts the circadian system 
+- previous increase in NREM, but what happens to homeostatic 
+regulation?
+
+
+
 
 Constant light causes sleep during first few hours of subjective dark
 - Cannot be homeostatic as no change
