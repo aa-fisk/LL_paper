@@ -57,13 +57,11 @@ Why don't we start seeing if we can get somnotate to work?
     - Created spreadsheet with correct file names (except 9/10 mix up)
     - now, how to run?
         - In somnotate dir can just run in terminal
-            - python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/extensions/convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
-        - Error no data.io module?
-        - no data_io module in somnotate dir, but is present in the 
-        example pipeline?
-        - Do we need to put it into the example pipeline then?
-        - problem is that it's not finding data_io because it's not in the same
-        dir as the convert script, so do need to change it 
+            - python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/00_convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
+            - Okay getting got 2 columns instead of 3 problem, 
+            - due to frontal/occipital/EMG missing? try fix 
+            - Problem with only exporting one signal from sleepsign? 
+
 
 
 Writing
