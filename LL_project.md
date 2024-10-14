@@ -18,10 +18,53 @@ LL_project
 Okay writing feels a bit hard at the moment
 Why don't we start seeing if we can get somnotate to work?
 
-- Find the data?
-- Raw data? - I think it's only on hard drives? - check at home 
-    - Can't do any more on that from ehre 
-    
+- Raw data on backup hard drives
+    - On PC
+    - TODO reformat hard drives and update backups 
+- Install somnotate
+- Train classifier
+    - What do we need to do this? 
+    - Need annotations in visbrain format
+        - Currently in our FFT file format
+        - TODO convert to visbrain format
+            - conversion script in somnotate already 
+    - CSV file with list of trained dataset filepaths 
+- Run classifier on new data 
+
+- Steps
+- Install somnotate
+- convert from FFT to visbrain
+- Create spreadsheet (from example in data dir)
+- train
+- run
+
+
+- Installing
+    - Pomegranate 0.14.4 not available on conda (not on website either?)
+        - Changed to 0.14.8
+    - osx/arm problem 
+        - need to specify as a intel env so
+        -  CONDA_SUBDIR=osx-64 conda create --no-default-packages --name somnotate_env
+    - DONE!!    
+
+- Convert FFT to visbrain
+    - What is our test file?
+        - LL1-EEG-EMG-180409.edf
+        - don't have the 09 FFT file, just use the 10 instead
+    - What arguments is it expecting? 
+        - spreadsheet file path 
+        - okay so next step is to create a spreadsheet
+    - Created spreadsheet with correct file names (except 9/10 mix up)
+    - now, how to run?
+        - In somnotate dir can just run in terminal
+            - python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/extensions/convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
+        - Error no data.io module?
+        - no data_io module in somnotate dir, but is present in the 
+        example pipeline?
+        - Do we need to put it into the example pipeline then?
+        - problem is that it's not finding data_io because it's not in the same
+        dir as the convert script, so do need to change it 
+
 
 Writing
 - What do we need to  do/how change?
