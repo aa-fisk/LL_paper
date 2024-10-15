@@ -87,7 +87,27 @@ python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somn
 Not the end of the world, do have raw data and matlab scripts
 Neurotraces right to turn into edf file? 
 - can use pc to do that right?
-
+- Okay so neurotracers can do it 
+    - Have to install SikuliX script to run but all on https://github.com/A-Fisk/VVlab_Scripts/ so doable
+- also can do with EDF viewer, better supported? 
+- Ascii2EDF can do via command line
+    - Need to figure out how to run it in loop
+    - how to write bash script? 
+        - what do we want it to do?
+        - get list of all files in dir 
+        - run ascii convert on each text file 
+    - Create template file 
+    - current having issue compiling c script
+    - need libxml2 but need to update homebrew first, large file 
+    - okay repeatedly failing
+    - no idea why? - easy, just had to use makefile!
+    - okay got C working, but having trouble getting to run in script, 
+    - lets try instead as just running on a single file 
+    - okay progress, want from EDF browser, see if can use to make the
+    template
+    - Aha! made from browser and it's working! Don't know 
+    what the difference is !
+    
 
 
 

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <EDFbrowser_ascii2edf_template>
-    <separator> </separator>
+    <separator>space</separator>
     <columns>4</columns>
     <startline>1</startline>
     <samplefrequency>256</samplefrequency>
@@ -34,3 +35,4 @@
         <multiplier>1.000000</multiplier>
     </signalparams>
 </EDFbrowser_ascii2edf_template>
+
