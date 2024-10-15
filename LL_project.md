@@ -61,6 +61,9 @@ Why don't we start seeing if we can get somnotate to work?
             - Okay getting got 2 columns instead of 3 problem, 
             - due to using csv as delimiter, added to code now fine 
 
+- convert fft to visbrain 
+python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/00_convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv 
+
 - preprocess training data 
 python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/01_preprocess_signals.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
 
@@ -109,6 +112,10 @@ Neurotraces right to turn into edf file?
     what the difference is !
     
 
+- check the edfs are fine 
+- train model on all annotated data
+- run model on all data
+- graph and analyse data 
 
 
 Writing

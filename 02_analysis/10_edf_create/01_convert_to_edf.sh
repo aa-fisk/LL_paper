@@ -19,28 +19,28 @@ output_directory="/Users/angusfisk/Documents/01_personal_files/01_work/11_LL_pap
 
 counter=1
 
-FIRST_FILE=$(find "$input_directory" -maxdepth 1 -type f | head -n 1)
+#FIRST_FILE=$(find "$input_directory" -maxdepth 1 -type f | head -n 1)
 
-$ascii $FIRST_FILE $template_file "Mouse" "date" "18" "04" "09" "00" "00" "00" "$output_directory/test.edf"  # Adjust file extension as needed
+#$ascii $FIRST_FILE $template_file "Mouse" "date" "18" "04" "09" "00" "00" "00" "$output_directory/test.edf"  # Adjust file extension as needed
 
 # Loop through each file in the input directory
-#for file in "$input_directory"/*; do
-#    # Check if it's a file
-#    # Get the base name of the file (without the directory path)
-#    base_name=$(basename "$file")
-#    echo "Attempting to read template file in loop $counter"
-#
-#    # Run ascii2edf on the file
-#    # Change `ascii2edf` to the full path if necessary
-#    $ascii "$file" $template_file "Mouse" "date" "18" "04" "09" "00" "00" "00" "$output_directory/${base_name%.txt}.edf"  # Adjust file extension as needed
-#
-#    # Check if the command succeeded
-#    if [[ $? -eq 0 ]]; then
-#        echo "Converted $file to $output_directory/${base_name%.txt}.edf"
-#    else
-#        echo "Failed to convert"
-#        #$file
-#    fi
-#    ((counter++))
-#done
-#
+for file in "$input_directory"/*; do
+    # Check if it's a file
+    # Get the base name of the file (without the directory path)
+    base_name=$(basename "$file")
+    echo "Attempting to read template file in loop $counter"
+
+    # Run ascii2edf on the file
+    # Change `ascii2edf` to the full path if necessary
+    $ascii "$file" $template_file "Mouse" "date" "18" "04" "09" "00" "00" "00" "$output_directory/${base_name%.txt}.edf"  # Adjust file extension as needed
+
+    # Check if the command succeeded
+    if [[ $? -eq 0 ]]; then
+        echo "Converted $file to $output_directory/${base_name%.txt}.edf"
+    else
+        echo "Failed to convert"
+        #$file
+    fi
+    ((counter++))
+done
+
