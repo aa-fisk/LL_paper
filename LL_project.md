@@ -57,10 +57,37 @@ Why don't we start seeing if we can get somnotate to work?
     - Created spreadsheet with correct file names (except 9/10 mix up)
     - now, how to run?
         - In somnotate dir can just run in terminal
-            - python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/00_convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
+            - python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/00_convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv 
             - Okay getting got 2 columns instead of 3 problem, 
-            - due to frontal/occipital/EMG missing? try fix 
-            - Problem with only exporting one signal from sleepsign? 
+            - due to using csv as delimiter, added to code now fine 
+
+- preprocess training data 
+python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/01_preprocess_signals.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
+
+- test on training data 
+python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/02_test_state_annotation.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
+
+- train model
+python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/03_train_state_annotation.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/01_model/model.pickle
+
+- preprocess unannotated 
+python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/01_preprocess_signals.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_unannotated.csv
+
+- apply to unannotated 
+python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/04_run_state_annotation.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_unannotated.csv /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/01_model/model.pickle
+
+- manually check intervals
+python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/05_manual_refinement.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_unannotated.csv
+
+- hahahahaha! It works!!!!! It all worked!!!
+
+- get more data from more mice and update 
+
+- Okay problem, do not have .edf files for all animals?!?!?!? 
+Not the end of the world, do have raw data and matlab scripts
+Neurotraces right to turn into edf file? 
+- can use pc to do that right?
+
 
 
 
