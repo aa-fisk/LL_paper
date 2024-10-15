@@ -22,5 +22,5 @@ for file_test in files:
     # write file 
     save_dir = directory.parent / '02_cropped'
     save_name = save_dir / file_test.name
-    highlevel.write_edf(str(save_name), signals, signal_headers, header)
+    highlevel.write_edf(str(save_name), signals_cropped, signal_headers, header)
 
