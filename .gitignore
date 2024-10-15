@@ -43,3 +43,7 @@ LL_project.md
 
 # swap files vim 
 *.swp
+
+
+# somnotate files 
+02_analysis/09_somnotate/*
