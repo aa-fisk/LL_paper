@@ -21,45 +21,10 @@ Why don't we start seeing if we can get somnotate to work?
 - Raw data on backup hard drives
     - On PC
     - TODO reformat hard drives and update backups 
-- Install somnotate
-- Train classifier
-    - What do we need to do this? 
-    - Need annotations in visbrain format
-        - Currently in our FFT file format
-        - TODO convert to visbrain format
-            - conversion script in somnotate already 
-    - CSV file with list of trained dataset filepaths 
-- Run classifier on new data 
 
-- Steps
-- Install somnotate
-- convert from FFT to visbrain
-- Create spreadsheet (from example in data dir)
-- train
-- run
+- need to crop all the edf files at some point in pipeline 
+python /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/10_edf_create/03_edf_crop.py
 
-
-- Installing
-    - Pomegranate 0.14.4 not available on conda (not on website either?)
-        - Changed to 0.14.8
-    - osx/arm problem 
-        - need to specify as a intel env so
-        -  CONDA_SUBDIR=osx-64 conda create --no-default-packages --name somnotate_env
-    - DONE!!    
-
-- Convert FFT to visbrain
-    - What is our test file?
-        - LL1-EEG-EMG-180409.edf
-        - don't have the 09 FFT file, just use the 10 instead
-    - What arguments is it expecting? 
-        - spreadsheet file path 
-        - okay so next step is to create a spreadsheet
-    - Created spreadsheet with correct file names (except 9/10 mix up)
-    - now, how to run?
-        - In somnotate dir can just run in terminal
-            - python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/00_convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv 
-            - Okay getting got 2 columns instead of 3 problem, 
-            - due to using csv as delimiter, added to code now fine 
 
 - convert fft to visbrain 
 python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/00_convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv 
@@ -68,6 +33,8 @@ python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somn
 python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/01_preprocess_signals.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
 
 - test on training data 
+- trains full model in hold one out fashion 
+- add -s to get plot as well 
 python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/02_test_state_annotation.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv
 
 - train model
@@ -84,38 +51,16 @@ python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somn
 
 - hahahahaha! It works!!!!! It all worked!!!
 
-- get more data from more mice and update 
-
-- Okay problem, do not have .edf files for all animals?!?!?!? 
-Not the end of the world, do have raw data and matlab scripts
-Neurotraces right to turn into edf file? 
-- can use pc to do that right?
-- Okay so neurotracers can do it 
-    - Have to install SikuliX script to run but all on https://github.com/A-Fisk/VVlab_Scripts/ so doable
-- also can do with EDF viewer, better supported? 
-- Ascii2EDF can do via command line
-    - Need to figure out how to run it in loop
-    - how to write bash script? 
-        - what do we want it to do?
-        - get list of all files in dir 
-        - run ascii convert on each text file 
-    - Create template file 
-    - current having issue compiling c script
-    - need libxml2 but need to update homebrew first, large file 
-    - okay repeatedly failing
-    - no idea why? - easy, just had to use makefile!
-    - okay got C working, but having trouble getting to run in script, 
-    - lets try instead as just running on a single file 
-    - okay progress, want from EDF browser, see if can use to make the
-    template
-    - Aha! made from browser and it's working! Don't know 
-    what the difference is !
-    
-
-- check the edfs are fine 
-- train model on all annotated data
-- run model on all data
+TODO
+- convert from visbrain to my clean fft format ?
+- check how well scoring has done 
 - graph and analyse data 
+- graph all days by vigilance state (fig 2? from paper )
+- write notes on pipeline 
+
+- Problems
+- Missing LL8 180411/12 edf/ascii files? but have scored so they do
+exist? hmm
 
 
 Writing
