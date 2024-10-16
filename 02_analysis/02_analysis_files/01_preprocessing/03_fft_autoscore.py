@@ -80,7 +80,11 @@ def process_edf_file(edf_file_path):
     print(f"Saved all binned FFT results to {output_file_path}")
 
 # Process all EDF files in the input directory
-for edf_file in input_directory.glob('*.edf'):
+edf_files = list(input_directory.glob('*.edf'))
+total_files = len(edf_files)
+
+for count, edf_file in enumerate(edf_files, start=1):
     process_edf_file(edf_file)
+    print(f"Processed {count}/{total_files} files.")
 
 print("FFT processing complete for all files.")
