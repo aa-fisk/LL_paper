@@ -15,12 +15,18 @@ LL_project
 
 # Working notes 
 
-Okay writing feels a bit hard at the moment
-Why don't we start seeing if we can get somnotate to work?
 
-- Raw data on backup hard drives
-    - On PC
-    - TODO reformat hard drives and update backups 
+
+
+TODO
+- convert from visbrain to my clean fft format ?
+- check how well scoring has done 
+- graph and analyse data 
+- graph all days by vigilance state (fig 2? from paper )
+- write notes on pipeline 
+    - add pyedflib
+    - mne
+- update to be working in own environment 
 
 - need to crop all the edf files at some point in pipeline 
 python /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/10_edf_create/03_edf_crop.py
@@ -51,12 +57,8 @@ python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somn
 
 - hahahahaha! It works!!!!! It all worked!!!
 
-TODO
-- convert from visbrain to my clean fft format ?
-- check how well scoring has done 
-- graph and analyse data 
-- graph all days by vigilance state (fig 2? from paper )
-- write notes on pipeline 
+
+
 
 - Problems
 - Missing LL8 180411/12 edf/ascii files? but have scored so they do
