@@ -28,10 +28,53 @@ TODO
     - mne
 - update to be working in own environment 
 
-- need to crop all the edf files at some point in pipeline 
+
+- okay let's create environment and check if working 
+    - check at some point, just going to go ahead and use for now
+- next step add in doing for all 3 channels 
+- done 
+What's next?
+- then turn into clean FFT file like have already
+- What is format? 
+    - Single file for animal
+    - index labelling day - baseline, LL, recovery? 
+    - derivation
+    - time window 
+    - annotation 
+- so need to combine with sleepsign output at this point 
+- This step is combining all the days, and adding the scoring to the 
+epochs 
+
+- okay so read in visbrain and converted to timedate, done 
+- should I actually add in the real dates to index? 
+    - Done 
+- Next step read in FFT and match
+- Then do for all file
+
+- Okay problem now is that's it's doign for all files and not saving 
+each animal individually 
+
+- current problem is it's reading in all fft files everytime it reads 
+in a single annotation file
+want to read in annotation file, matching FFT file, then combine
+
+- TODO 
+- remove window from index because duplicate at the moment 
+- check that is continuous, what's going on with the extra time at the end 
+of some recordings, which go to like 2am for some reason 
+- label as baseline/ll1,2,3 etc.
+- uh oh looks like values are all the same for the different derivations 
+    - cheated and just tripled 
+- running into problem plotting - too much data !!!
+
+Pipeline
+- 
+
+ll_env
+- Crop manual annotation to match edf files 
 python /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/10_edf_create/03_edf_crop.py
 
-
+somnotate_env
 - convert fft to visbrain 
 python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/00_convert_sleepsign_files.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_annotated.csv 
 
@@ -55,6 +98,11 @@ python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somn
 - manually check intervals
 python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate/example_pipeline/05_manual_refinement.py /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/09_somnotate/spreadsheet_unannotated.csv
 
+back to ll_env
+- FFT on raw edf files 
+python /Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/02_analysis_files/01_preprocessing/03_fft_autoscore.py
+
+
 - hahahahaha! It works!!!!! It all worked!!!
 
 
@@ -63,6 +111,7 @@ python /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somn
 - Problems
 - Missing LL8 180411/12 edf/ascii files? but have scored so they do
 exist? hmm
+- Found why some are stupidly long, they start at 2367 for some reason?
 
 
 Writing
