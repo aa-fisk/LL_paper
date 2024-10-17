@@ -1,6 +1,7 @@
 import pdb
 import numpy as np 
 import pandas as pd
+import matplotlib.pyplot as plt
 from pathlib import Path
 
 # Parameters
@@ -37,8 +38,9 @@ def convert_annotations_to_time_index(annotations_df, window_length, file_stem):
     end_date = annotations_df['Time'].max() + pd.Timedelta(
         seconds=window_length
     )
-    time_index = pd.date_range(start=start_date, end=end_date, 
-                                freq=f'{window_length}s')
+    time_index = pd.date_range(
+        start=start_date, end=end_date, freq=f'{window_length}s'
+    )
 
     sleep_states = pd.DataFrame(index=time_index, columns=['State'])
 
@@ -73,7 +75,7 @@ def load_fft_values(file_path, start_date):
 
     # Create a MultiIndex with the datetime index and channel names
     multi_index = pd.MultiIndex.from_product(
-        [new_index, channels], names=['Window', 'Channel']
+        [channels, new_index], names=['Channel', 'Window']
     )
 
     # Assign the MultiIndex to the DataFrame
@@ -81,7 +83,7 @@ def load_fft_values(file_path, start_date):
     fft_df.index = multi_index
     
     fft_df.drop(columns=['Window'], inplace=True)    
-
+ 
     return fft_df
 
 # Main processing for multiple files
@@ -177,7 +179,7 @@ def process_files(annotation_dir_path, fft_dir_path):
                 channel_df.to_csv(save_file_path, index=False)
                 print(
                     f"Saved DataFrame for {animal_id}"   
-                    "- {channel} to {save_file_path}"
+                    f"- {channel} to {save_file_path}"
                 )
 
     return combined_data
@@ -185,3 +187,7 @@ def process_files(annotation_dir_path, fft_dir_path):
 if __name__ == "__main__":
     # Run the processing
     final_combined_df = process_files(annotation_dir_path, fft_dir_path)
+
+
+
+
