@@ -1,15 +1,20 @@
 import pyedflib
+import pdb 
 import numpy as np
 import pandas as pd
 from pathlib import Path
 
 # Parameters
 
-input_directory = Path('/Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/01_data_files/01_edf/01_script')
+input_directory = Path(
+        '/Users/angusfisk/Documents/01_personal_files/01_work/'
+        '11_LL_paper/02_analysis/01_data_files/01_edf/01_script'
+)
 output_directory = input_directory.parents[1] / '06_fft_files' / '01_script'
 sampling_rate = 256  # Sampling rate in Hz
 window_length = 4  # Length of the window in seconds
-window_samples = window_length * sampling_rate  # Number of samples in the window
+window_samples = window_length * sampling_rate  
+    # Number of samples in the window
 freq_bin_size = 0.25  # Size of frequency bins in Hz
 freq_limit = 20 #frequency limit in Hz
 
@@ -40,7 +45,9 @@ def process_edf_file(edf_file_path):
             n_windows = len(signal) // window_samples
 
             # Frequency array for FFT
-            frequencies = np.fft.fftfreq(window_samples, d=1/sampling_rate)[:window_samples // 2]
+            frequencies = np.fft.fftfreq(
+                    window_samples, d=1/sampling_rate
+            )[:window_samples // 2]
 
             # Process each window
             for i in range(n_windows):
@@ -50,9 +57,11 @@ def process_edf_file(edf_file_path):
 
                 # Perform FFT
                 fft_result = np.fft.fft(signal_window)
-                magnitude = np.abs(fft_result[:window_samples // 2])  # Get magnitude for positive frequencies
+                magnitude = np.abs(fft_result[:window_samples // 2])  
+                    # Get magnitude for positive frequencies
 
-                # Filter frequencies and magnitudes to keep only those between 0 and 20 Hz
+                # Filter frequencies and magnitudes 
+                # to keep only those between 0 and 20 Hz
                 valid_indices = frequencies <= freq_limit
                 valid_frequencies = frequencies[valid_indices]
                 valid_magnitude = magnitude[valid_indices]
@@ -69,7 +78,9 @@ def process_edf_file(edf_file_path):
                 frequency_bins = np.arange(num_bins) * freq_bin_size
                 for bin_freq, bin_mag in zip(frequency_bins, binned_magnitude):
                     all_results.append({
-                        'Channel': channel_name_mapping.get(channel_index, f"Channel {channel_index}"),
+                        'Channel': channel_name_mapping.get(
+                            channel_index, f"Channel {channel_index}"
+                        ),
                         'Frequency (Hz)': bin_freq,
                         'Magnitude': bin_mag,
                         'Window': i + 1
@@ -79,8 +90,12 @@ def process_edf_file(edf_file_path):
     results_df = pd.DataFrame(all_results)
 
     # Pivot the DataFrame to have frequencies as columns
-    pivoted_df = results_df.pivot_table(index=['Channel', 'Window'], columns='Frequency (Hz)', values='Magnitude', fill_value=0)
-
+    pivoted_df = results_df.pivot_table(
+            index=['Channel', 'Window'], 
+            columns='Frequency (Hz)', 
+            values='Magnitude', fill_value=0
+    )
+       
     # Save the pivoted DataFrame to a single CSV file
     pivoted_df.to_csv(output_file_path)
 
