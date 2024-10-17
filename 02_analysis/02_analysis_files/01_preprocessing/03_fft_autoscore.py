@@ -16,6 +16,9 @@ freq_limit = 20 #frequency limit in Hz
 # Create output directory if it doesn't exist
 output_directory.mkdir(exist_ok=True)
 
+# Channel name mapping
+channel_name_mapping = {0: "fro", 1: "occ", 2: "foc"}
+
 # Function to process a single EDF file
 def process_edf_file(edf_file_path):
     # Get the filename stem for output
@@ -25,54 +28,58 @@ def process_edf_file(edf_file_path):
     # Read the EDF file
     with pyedflib.EdfReader(str(edf_file_path)) as f:
         n_channels = f.signals_in_file
-        signal_labels = f.getSignalLabels()
 
-        # Choose a channel to analyze (for example, the first channel)
-        channel_index = 0  # Change as needed
-        signal = f.readSignal(channel_index)
+        # Process the first three channels (or fewer if there aren't three)
+        num_channels_to_process = min(3, n_channels)
+        all_results = []
 
-    # Calculate number of windows
-    n_windows = len(signal) // window_samples
+        for channel_index in range(num_channels_to_process):
+            signal = f.readSignal(channel_index)
 
-    # Frequency array for FFT
-    frequencies = np.fft.fftfreq(window_samples, d=1/sampling_rate)[:window_samples // 2]
+            # Calculate number of windows
+            n_windows = len(signal) // window_samples
 
-    # Initialize a list to collect all results
-    all_results = []
+            # Frequency array for FFT
+            frequencies = np.fft.fftfreq(window_samples, d=1/sampling_rate)[:window_samples // 2]
 
-    # Process each window
-    for i in range(n_windows):
-        start_sample = i * window_samples
-        end_sample = start_sample + window_samples
-        signal_window = signal[start_sample:end_sample]
+            # Process each window
+            for i in range(n_windows):
+                start_sample = i * window_samples
+                end_sample = start_sample + window_samples
+                signal_window = signal[start_sample:end_sample]
 
-        # Perform FFT
-        fft_result = np.fft.fft(signal_window)
-        magnitude = np.abs(fft_result[:window_samples // 2])  # Get magnitude for positive frequencies
+                # Perform FFT
+                fft_result = np.fft.fft(signal_window)
+                magnitude = np.abs(fft_result[:window_samples // 2])  # Get magnitude for positive frequencies
 
-        # Filter frequencies and magnitudes to keep only those between 0 and 20 Hz
-        valid_indices = frequencies <= freq_limit
-        valid_frequencies = frequencies[valid_indices]
-        valid_magnitude = magnitude[valid_indices]
+                # Filter frequencies and magnitudes to keep only those between 0 and 20 Hz
+                valid_indices = frequencies <= freq_limit
+                valid_frequencies = frequencies[valid_indices]
+                valid_magnitude = magnitude[valid_indices]
 
-        # Bin the results for the valid frequencies
-        num_bins = int(freq_limit / freq_bin_size) + 1
-        binned_magnitude = np.zeros(num_bins)
+                # Bin the results for the valid frequencies
+                num_bins = int(freq_limit / freq_bin_size) + 1
+                binned_magnitude = np.zeros(num_bins)
 
-        for j in range(len(valid_frequencies)):
-            bin_index = int(valid_frequencies[j] // freq_bin_size)
-            binned_magnitude[bin_index] += valid_magnitude[j]
+                for j in range(len(valid_frequencies)):
+                    bin_index = int(valid_frequencies[j] // freq_bin_size)
+                    binned_magnitude[bin_index] += valid_magnitude[j]
 
-        # Prepare data for aggregation
-        frequency_bins = np.arange(num_bins) * freq_bin_size
-        for bin_freq, bin_mag in zip(frequency_bins, binned_magnitude):
-            all_results.append({'Frequency (Hz)': bin_freq, 'Magnitude': bin_mag, 'Window': i + 1})
+                # Prepare data for aggregation
+                frequency_bins = np.arange(num_bins) * freq_bin_size
+                for bin_freq, bin_mag in zip(frequency_bins, binned_magnitude):
+                    all_results.append({
+                        'Channel': channel_name_mapping.get(channel_index, f"Channel {channel_index}"),
+                        'Frequency (Hz)': bin_freq,
+                        'Magnitude': bin_mag,
+                        'Window': i + 1
+                    })
 
     # Convert all results to a DataFrame
     results_df = pd.DataFrame(all_results)
 
-    # Pivot the DataFrame to have frequencies as columns and windows as index
-    pivoted_df = results_df.pivot(index='Window', columns='Frequency (Hz)', values='Magnitude')
+    # Pivot the DataFrame to have frequencies as columns
+    pivoted_df = results_df.pivot_table(index=['Channel', 'Window'], columns='Frequency (Hz)', values='Magnitude', fill_value=0)
 
     # Save the pivoted DataFrame to a single CSV file
     pivoted_df.to_csv(output_file_path)

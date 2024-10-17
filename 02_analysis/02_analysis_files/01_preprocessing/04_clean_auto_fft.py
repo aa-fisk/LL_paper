@@ -1,4 +1,5 @@
 import pdb
+import numpy as np 
 import pandas as pd
 from pathlib import Path
 
@@ -137,7 +138,17 @@ def process_files(annotation_dir_path, fft_dir_path):
                         fft_df.reset_index(), left_on='index', 
                         right_on='Window', direction='forward'
                     )
-
+                    # Repeat the 'State' for each channel
+                    combined_temp_df = combined_temp_df.loc[
+                        :, combined_temp_df.columns.difference(['Window'])
+                    ]
+                    combined_temp_df = combined_temp_df.reindex(
+                        combined_temp_df.index.repeat(len(channels))
+                    )
+                    combined_temp_df['Channel'] = np.tile(channels, 
+                        len(combined_temp_df) // len(channels)
+                    )
+                    
                     # Concatenate to the animal's DataFrame
                     combined_data[animal_id] = pd.concat(
                         [combined_data[animal_id], combined_temp_df], 
@@ -152,11 +163,11 @@ def process_files(annotation_dir_path, fft_dir_path):
         print(f"Processed {index + 1}/{total_files} animals.")
     
     for animal_id, df in combined_data.items():
-        save_file_path = save_file_dir / 'f{animal_id}.csv'
+        save_file_path = save_dir_path / (animal_id + '.csv')
         df.to_csv(save_file_path, index=False)
         print(f"Saved combined DataFrame for {animal_id} to {save_file_path}")
 
-    return combined_df
+    return combined_data
 
 # Run the processing
 final_combined_df = process_files(annotation_dir_path, fft_dir_path)
