@@ -7,7 +7,7 @@ annotation_file_path = Path('/Users/angusfisk/Documents/01_personal_files/01_wor
 fft_file_path = (annotation_file_path.parents[2] / '06_fft_files' / '01_script' / annotation_file_path.stem).with_suffix(".csv") 
 sampling_rate = 256  # Sampling rate in Hz
 window_length = 4  # Length of the window in seconds
-
+channels = ['fro', 'occ', 'foc']  # Example channel names
 
 # Load sleep state annotations
 def load_annotations(file_path):
@@ -59,20 +59,23 @@ def convert_annotations_to_time_index(annotations_df, window_length, file_stem):
 
 # Load FFT values
 def load_fft_values(file_path, start_date):
-    fft_df = pd.read_csv(file_path)
-    fft_df['Window'] = pd.to_datetime(fft_df['Window'])  # Ensure Time is datetime type
-
-    # Adjust the FFT time index to start from the filename stem date
-    min_fft_time = fft_df['Window'].min()
-    offset = start_date - min_fft_time
-    fft_df['Window'] += offset  # Adjust all FFT times by the calculated offset
+    # Read FFT DataFrame with the first two columns as the index
+    fft_df = pd.read_csv(file_path, index_col=[0, 1])
     
-    # set time to index 
-    fft_df.set_index('Window', inplace=True)
+    # Get the length of the first channel
+    num_rows = fft_df.shape[0] // len(channels)
+
+    # Create a new datetime index based on the filename stem
+    new_index = pd.date_range(start=start_date, periods=num_rows, freq='4S')
+
+    # Add 'Window' column for the existing index and set it
+    fft_df.reset_index(inplace=True)
+    fft_df['Window'] = new_index.repeat(len(channels))  # Repeat new index for each channel
+
+    # Set the new MultiIndex with Channel and Window
+    fft_df.set_index(['Channel', 'Window'], inplace=True)
 
     return fft_df
-
-
 
 # Main processing
 file_stem = annotation_file_path.stem  # Get the filename stem
@@ -84,15 +87,17 @@ sleep_states_df = convert_annotations_to_time_index(annotations_df, window_lengt
 start_date = pd.to_datetime(file_stem[-6:], format='%y%m%d')  # Extract date from filename stem
 fft_df = load_fft_values(fft_file_path, start_date)
 
-# Merge the sleep states and FFT values on time
-combined_df = pd.merge_asof(sleep_states_df.reset_index(), fft_df, on='Time', direction='forward')
+# Merge the sleep states and FFT values on window
+combined_df = pd.merge_asof(sleep_states_df.reset_index(), fft_df.reset_index(), left_on='index', right_on='Window', direction='forward')
 
-
-
-# read in state annotations in visbrain format 
-
-# read in FFT csv 
-
-# Combine? 
 
 # save output 
+ # Optionally save the combined DataFrame
+output_file_path = Path('combined_sleep_states_fft.csv')
+#combined_df.to_csv(output_file_path, index=False)
+print(f"Saved combined DataFrame to {output_file_path}")
+
+# Output the resulting DataFrame
+print(combined_df)
+
+
