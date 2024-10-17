@@ -4,7 +4,10 @@ import pandas as pd
 from pathlib import Path
 
 # Parameters
-annotation_dir_path = Path('/Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/01_data_files/11_somnotate/02_auto_states/')  
+annotation_dir_path = Path(
+    '/Users/angusfisk/Documents/01_personal_files/01_work/'
+    '11_LL_paper/02_analysis/01_data_files/11_somnotate/02_auto_states/'
+)  
 fft_dir_path = annotation_dir_path.parents[1] / '06_fft_files' / '01_script' 
 save_dir_path = annotation_dir_path.parents[1] / \
     '07_clean_fft_files' / '01_script'
@@ -85,7 +88,7 @@ def load_fft_values(file_path, start_date):
 def process_files(annotation_dir_path, fft_dir_path):
     combined_data = {}  # Dictionary to hold DataFrames for each animal
     # Get all annotation files
-    annotation_files = list(annotation_dir_path.glob('*.hyp'))
+    annotation_files = list(annotation_dir_path.glob('LL*.hyp'))
 
     # Extract unique animal IDs from annotation file stems
     unique_animals = {file.stem[:3] for file in annotation_files}
@@ -174,7 +177,7 @@ def process_files(annotation_dir_path, fft_dir_path):
                 channel_df.to_csv(save_file_path, index=False)
                 print(
                     f"Saved DataFrame for {animal_id}"   
-                    + "- {channel} to {save_file_path}"
+                    "- {channel} to {save_file_path}"
                 )
 
     return combined_data
