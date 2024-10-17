@@ -146,6 +146,9 @@ def process_files(annotation_dir_path, fft_dir_path):
 
                         # Add the channel column
                         combined_temp_df['Channel'] = channel
+
+                        # Drop the "Window" column
+                        combined_temp_df.drop(columns=['Window'], inplace=True)
                         
                         # Concatenate to the animal's DataFrame
                         combined_data[animal_id] = pd.concat(
