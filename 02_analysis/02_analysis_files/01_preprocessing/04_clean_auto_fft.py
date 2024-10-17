@@ -5,6 +5,8 @@ from pathlib import Path
 # Parameters
 annotation_dir_path = Path('/Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/01_data_files/11_somnotate/02_auto_states/')  
 fft_dir_path = annotation_dir_path.parents[1] / '06_fft_files' / '01_script' 
+save_dir_path = annotation_dir_path.parents[1] / \
+    '07_clean_fft_files' / '01_script'
 sampling_rate = 256  # Sampling rate in Hz
 window_length = 4  # Length of the window in seconds
 channels = ['fro', 'occ', 'foc']  # Example channel names
@@ -80,75 +82,82 @@ def load_fft_values(file_path, start_date):
 
 # Main processing for multiple files
 def process_files(annotation_dir_path, fft_dir_path):
-    combined_df = pd.DataFrame()  # Initialize an empty DataFrame
-
+    combined_data = {}  # Dictionary to hold DataFrames for each animal
     # Get all annotation files
     annotation_files = list(annotation_dir_path.glob('*.hyp'))
 
-    # Initialize a counter
-    total_files = len(annotation_files)
+    # Extract unique animal IDs from annotation file stems
+    unique_animals = {file.stem[:3] for file in annotation_files}
+    print(f"Processing data for unique animals: {unique_animals}")
     
-    for index, annotation_file in enumerate(annotation_files):
-
-        file_stem = annotation_file.stem
-        matching_fft_files = list(
-            fft_dir_path.glob(f"{file_stem[:3]}*.csv")
-        )
+    # Initialize a counter
+    total_files = len(unique_animals)
+    
+    for index, animal_id in enumerate(unique_animals):
         
-        print(f"Processing{file_stem}") 
+        # Get all annotation files for the current animal
+        matching_annotation_files = list(
+            annotation_dir_path.glob(f"{animal_id}*.hyp")
+        )
 
-        if matching_fft_files:
-            annotations_df = load_annotations(annotation_file)
-
-            if annotations_df.empty:
-                print(f"No annotations found in {annotation_file.name}.")
-                continue
-
-            sleep_states_df = convert_annotations_to_time_index(
-                annotations_df, window_length, file_stem
+        # Initialize DataFrame for the current animal
+        combined_data[animal_id] = pd.DataFrame()
+        
+        # counter of days 
+        total_days = len(matching_annotation_files)  
+        for index_1, annotation_file in enumerate(matching_annotation_files): 
+        
+            file_stem = annotation_file.stem
+            matching_fft_files = list(
+                fft_dir_path.glob(f"{file_stem}*.csv")
             )
-            
-            # counter of days 
-            total_days = len(matching_fft_files)  
+           
+            print(f"Processing{file_stem}") 
 
-            for index_1, fft_file in enumerate(matching_fft_files):
-                start_date = pd.to_datetime(file_stem[-6:], 
-                                             format='%y%m%d')
-                fft_df = load_fft_values(fft_file, start_date)
+            if matching_fft_files:
+                annotations_df = load_annotations(annotation_file)
+
+                if annotations_df.empty:
+                    print(f"No annotations found in {annotation_file.name}.")
+                    continue
+
+                sleep_states_df = convert_annotations_to_time_index(
+                    annotations_df, window_length, file_stem
+                )
                 
-                # Merge the sleep states and FFT values on window
-                combined_temp_df = pd.merge_asof(
-                    sleep_states_df.reset_index(),
-                    fft_df.reset_index(), left_on='index', 
-                    right_on='Window', direction='forward'
-                )
 
-                # Optionally, include a column for the file source
-                combined_temp_df['Source File'] = fft_file.name
+                for fft_file in matching_fft_files:
+                    start_date = pd.to_datetime(file_stem[-6:], 
+                                                 format='%y%m%d')
+                    fft_df = load_fft_values(fft_file, start_date)
+                    
+                    # Merge the sleep states and FFT values on window
+                    combined_temp_df = pd.merge_asof(
+                        sleep_states_df.reset_index(),
+                        fft_df.reset_index(), left_on='index', 
+                        right_on='Window', direction='forward'
+                    )
 
-                combined_df = pd.concat(
-                    [combined_df, combined_temp_df], 
-                    ignore_index=True
-                )
-
-                # Print progress
-                print(f"Processed {index_1 + 1}/{total_days} days.")
+                    # Concatenate to the animal's DataFrame
+                    combined_data[animal_id] = pd.concat(
+                        [combined_data[animal_id], combined_temp_df], 
+                        ignore_index=True
+                    )
+                    
+            # Print progress
+            print(f"Processed {index_1 + 1}/{total_days} days.")
+            
 
         # Print progress
-        print(f"Processed {index + 1}/{total_files} files.")
+        print(f"Processed {index + 1}/{total_files} animals.")
+    
+    for animal_id, df in combined_data.items():
+        save_file_path = save_file_dir / 'f{animal_id}.csv'
+        df.to_csv(save_file_path, index=False)
+        print(f"Saved combined DataFrame for {animal_id} to {save_file_path}")
 
     return combined_df
 
 # Run the processing
 final_combined_df = process_files(annotation_dir_path, fft_dir_path)
-
-
-# save output 
- # Optionally save the combined DataFrame
-output_file_path = Path('combined_sleep_states_fft.csv')
-#combined_df.to_csv(output_file_path, index=False)
-print(f"Saved combined DataFrame to {output_file_path}")
-
-# Output the resulting DataFrame
-
 
