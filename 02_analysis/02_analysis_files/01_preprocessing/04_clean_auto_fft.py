@@ -83,6 +83,16 @@ def load_fft_values(file_path, start_date):
     fft_df.index = multi_index
     
     fft_df.drop(columns=['Window'], inplace=True)    
+
+    # Define the cutoff for the first 24 hours, 
+    # excluding the exact 24-hour mark
+    cutoff_time = new_index[0] + pd.Timedelta(hours=24)
+    first_24_hours = new_index[new_index < cutoff_time]
+    
+    # Ensure the selection is valid for the MultiIndex
+    fft_df = fft_df.loc[
+        fft_df.index.get_level_values('Window').isin(first_24_hours)
+    ]    
  
     return fft_df
 
@@ -190,4 +200,6 @@ if __name__ == "__main__":
 
 
 
+
+test_df = combined_temp_df.set_index( ['index', "Channel"]).sort_index().xs("fro", level=1) 
 
