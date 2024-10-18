@@ -57,6 +57,11 @@ def convert_annotations_to_time_index(annotations_df, window_length, file_stem):
             sleep_states.loc[mask, 'State'] = state
 
     sleep_states['State'] = sleep_states['State'].ffill()
+    
+    # Define the cutoff for the first 24 hours, excluding the exact 24-hour mark
+    cutoff_time = start_date + pd.Timedelta(hours=24)
+    sleep_states = sleep_states[sleep_states.index < cutoff_time]
+
     return sleep_states
 
 # Load FFT values
@@ -93,7 +98,7 @@ def load_fft_values(file_path, start_date):
     fft_df = fft_df.loc[
         fft_df.index.get_level_values('Window').isin(first_24_hours)
     ]    
- 
+    
     return fft_df
 
 # Main processing for multiple files
@@ -141,7 +146,6 @@ def process_files(annotation_dir_path, fft_dir_path):
                     annotations_df, window_length, file_stem
                 )
                 
-
                 for fft_file in matching_fft_files:
                     start_date = pd.to_datetime(file_stem[-6:], 
                                                  format='%y%m%d')
@@ -200,6 +204,4 @@ if __name__ == "__main__":
 
 
 
-
-test_df = combined_temp_df.set_index( ['index', "Channel"]).sort_index().xs("fro", level=1) 
 
