@@ -26,13 +26,8 @@ TODO
 - write notes on pipeline 
     - add pyedflib
     - mne
-- update to be working in own environment 
 
 
-- okay let's create environment and check if working 
-    - check at some point, just going to go ahead and use for now
-- next step add in doing for all 3 channels 
-- done 
 What's next?
 - then turn into clean FFT file like have already
 - What is format? 
@@ -41,31 +36,35 @@ What's next?
     - derivation
     - time window 
     - annotation 
-- so need to combine with sleepsign output at this point 
-- This step is combining all the days, and adding the scoring to the 
-epochs 
 
-- okay so read in visbrain and converted to timedate, done 
-- should I actually add in the real dates to index? 
-    - Done 
-- Next step read in FFT and match
-- Then do for all file
+- Labelling days
+- which days are which? 
+    - 09 is baseline day
+    - 10 is first day of lights on - starting at 0837
+    - how does this lineup with the time index we have created? 
+    - what time do the recordings actually start? 0837?
+    - assuming that lights on and start of recording are at the same time
+        - check later
 
-- Okay problem now is that's it's doign for all files and not saving 
-each animal individually 
+- Plotting
+    - Slow wave activity by vigilance state 
+    - use old files or make all again?
+    - I think make all again as old is kinda crap
+    - delta is 0.5 to 4hz 
+    - Working but not really seeing any pattern? 
+    - how did we do it previously? 
+        - what time period - kept at 4s?
+        - is it just too small on each subplot
+    - okay how do we get rid of the days and just use time     
 
-- current problem is it's reading in all fft files everytime it reads 
-in a single annotation file
-want to read in annotation file, matching FFT file, then combine
+
+
 
 - TODO 
-- remove window from index because duplicate at the moment 
-- check that is continuous, what's going on with the extra time at the end 
-of some recordings, which go to like 2am for some reason 
 - label as baseline/ll1,2,3 etc.
-- uh oh looks like values are all the same for the different derivations 
-    - cheated and just tripled 
-- running into problem plotting - too much data !!!
+- plot! as for paper figure 
+
+
 
 Pipeline
 - 
