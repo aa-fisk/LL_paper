@@ -29,14 +29,6 @@ TODO
 
 
 What's next?
-- then turn into clean FFT file like have already
-- What is format? 
-    - Single file for animal
-    - index labelling day - baseline, LL, recovery? 
-    - derivation
-    - time window 
-    - annotation 
-
 - Labelling days
 - which days are which? 
     - 09 is baseline day
@@ -55,8 +47,19 @@ What's next?
     - how did we do it previously? 
         - what time period - kept at 4s?
         - is it just too small on each subplot
+        - lets look through plotting and see how that goes 
     - okay how do we get rid of the days and just use time     
-
+    - done but eh
+- looks real ugly, can't really tell anything
+- plot by state and do each day as own plot and save 
+- okay plot by state what am I seeing?
+    - lines all over the place - not going to 0 when in other states
+    - merge artifacts with states 
+    - colours very hard to tell, green and orange
+    - set y max to 30000
+    - too much data, did I resample? 
+        - Don't think so but check what _create_plot_ready_stages_list 
+        does to the data see if that tidies it up?
 
 
 
