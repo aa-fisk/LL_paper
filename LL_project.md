@@ -48,12 +48,23 @@ What's next?
     - tidy up delta hypnograms to make look better 
     - check out scoring - seems uuhhh weird 
 - tidy up so have better idea of problems for now 
+- Scoring seems to be completely wrong? 
+    - sleepsign problem?
+    - pipeline problem?
+    - given it's almost totally wrong I'm guessing pipeline problem? 
+    - but who knows 
+- Set up timeseries viewer and check on the scored files?    
+
+Updating environment to include somnotate
+- Trying to include all dependencies and having major problems
+- computer hung 
+- lots of conflicts
+- time series viewer does not need pomegranate so just ignore the
+dependencies?
 
 
 - TODO 
-- set ymax 
 - change colours 
-- plot hypnograms all animals 
 - do for all derivations 
 - move where saving
 
@@ -238,6 +249,9 @@ pandoc 03_ch3.docx -o 04_ch3.md --bibliography=thesis_references.bib --citeproc 
 
 ###Create environment
 CONDA_SUBDIR=osx-64 conda env create -f environment.yml
+
+### Update 
+CONDA_SUBDIR=osx-64 conda env update -f environment.yml
 
 ### Run preprocessing
 python 02_analysis/01_preprocessing/01_clean_fft.py
