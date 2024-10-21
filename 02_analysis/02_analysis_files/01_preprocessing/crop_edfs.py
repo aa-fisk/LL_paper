@@ -8,7 +8,7 @@ input_edf_dir = Path(
     "/Users/angusfisk/Documents/01_personal_files/01_work/"
     "11_LL_paper/02_analysis/01_data_files/01_edf/01_script"
 )
-output_edf_dir = input_edf_dir.parent / "03_test"
+output_edf_dir = input_edf_dir.parent / "02_cropped"
 
 
 def crop_edf_to_24_hours(
