@@ -1,3 +1,4 @@
+import pdb
 import pyedflib
 import numpy as np
 from datetime import timedelta
@@ -10,13 +11,19 @@ input_edf_dir = Path(
 output_edf_dir = input_edf_dir.parent / "03_test"
 
 
-def crop_edf_to_24_hours(input_edf_path, output_edf_path):
+def crop_edf_to_24_hours(
+        input_edf_path, 
+        output_edf_path, 
+        file_num, 
+        total_files):
     """
     Crop the EDF file to the first 24 hours of data and save it.
 
     Parameters:
     - input_edf_path (str): The path to the input EDF file.
     - output_edf_path (str): The path to save the cropped EDF file.
+    - file_num (int): Current file index (for progress tracking).
+    - total_files (int): Total number of files being processed.
     """
     # Open the EDF file for reading
     edf_reader = pyedflib.EdfReader(str(input_edf_path))
@@ -51,7 +58,8 @@ def crop_edf_to_24_hours(input_edf_path, output_edf_path):
         # Read the signal data from the input EDF file
         signal_data = edf_reader.readSignal(signal_index, start=0, 
                                             n=total_samples)
-
+        
+        pdb.set_trace()
         # Write the cropped signal data to the new EDF file
         edf_writer.writePhysicalSamples(signal_data[:total_samples])
 
@@ -59,15 +67,16 @@ def crop_edf_to_24_hours(input_edf_path, output_edf_path):
     edf_reader.close()
     edf_writer.close()
 
-    print(f"Saved the cropped 24-hour EDF file as: {output_edf_path}")
-
+    print(f"Processed file {file_num}/{total_files}: {input_edf_path.name}")
 
 if __name__ == "__main__":
-    # crop all files in input dir 
+    # List all edf files in input dir 
     file_list = list(input_edf_dir.glob("*.edf"))
-    for file in file_list:
+    total_files = len(file_list) 
+    
+    for i, file in enumerate(file_list):
         input_edf_path = file
         output_edf_path = output_edf_dir / str(file.stem + ".edf")
 
-        crop_edf_to_24_hours(input_edf_path, output_edf_path)
-
+        crop_edf_to_24_hours(input_edf_path, output_edf_path, i, total_files)
+        

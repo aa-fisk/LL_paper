@@ -8,7 +8,7 @@ from pathlib import Path
 
 input_directory = Path(
         '/Users/angusfisk/Documents/01_personal_files/01_work/'
-        '11_LL_paper/02_analysis/01_data_files/01_edf/01_script'
+        '11_LL_paper/02_analysis/01_data_files/01_edf/03_test'
 )
 output_directory = input_directory.parents[1] / '06_fft_files' / '01_script'
 sampling_rate = 256  # Sampling rate in Hz
