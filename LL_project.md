@@ -19,13 +19,12 @@ LL_project
 
 
 TODO
-- convert from visbrain to my clean fft format ?
 - check how well scoring has done 
-- graph and analyse data 
 - graph all days by vigilance state (fig 2? from paper )
 - write notes on pipeline 
     - add pyedflib
-    - mne
+- correct for free running period? 
+- label as baseline/ll1,2,3 etc.
 
 
 What's next?
@@ -39,33 +38,25 @@ What's next?
         - check later
 
 - Plotting
-    - Slow wave activity by vigilance state 
-    - use old files or make all again?
-    - I think make all again as old is kinda crap
-    - delta is 0.5 to 4hz 
-    - Working but not really seeing any pattern? 
-    - how did we do it previously? 
-        - what time period - kept at 4s?
-        - is it just too small on each subplot
-        - lets look through plotting and see how that goes 
-    - okay how do we get rid of the days and just use time     
-    - done but eh
-- looks real ugly, can't really tell anything
-- plot by state and do each day as own plot and save 
-- okay plot by state what am I seeing?
-    - lines all over the place - not going to 0 when in other states
-    - merge artifacts with states 
-    - colours very hard to tell, green and orange
-    - set y max to 30000
-    - too much data, did I resample? 
-        - Don't think so but check what _create_plot_ready_stages_list 
-        does to the data see if that tidies it up?
-
+- okay so have rough outline of delta hypnograms 
+- looks like crap
+- colours overlapping and hard to distinguish
+- labels all over the place
+- small image size 
+- no legend 
+- what now? 
+    - tidy up delta hypnograms to make look better 
+    - check out scoring - seems uuhhh weird 
+- tidy up so have better idea of problems for now 
 
 
 - TODO 
-- label as baseline/ll1,2,3 etc.
-- plot! as for paper figure 
+- set ymax 
+- change colours 
+- plot hypnograms all animals 
+- do for all derivations 
+- move where saving
+
 
 
 
