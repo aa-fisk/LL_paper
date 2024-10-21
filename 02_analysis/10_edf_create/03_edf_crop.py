@@ -7,7 +7,10 @@ from pyedflib import highlevel
 ch_names = ['chan. 0', 'chan. 1', 'chan. 2', 'chan. 3']
 
 # directories 
-directory = Path('/Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/02_analysis/01_data_files/01_edf/01_script')
+directory = Path(
+    '/Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper' 
+    '02_analysis/01_data_files/01_edf/01_script'
+)
 state_dir = directory.parents[1] / '11_somnotate' / '05_visbrain' #annotations
 save_dir = directory.parent / '02_cropped'
 
@@ -28,7 +31,9 @@ for file_test in filtered_edf_files:
     curr_state = state_file_map[file_test.stem]
 
     # read in file 
-    signals, signal_headers, header = highlevel.read_edf(str(file_test), ch_names=ch_names)
+    signals, signal_headers, header = highlevel.read_edf(
+            str(file_test), ch_names=ch_names
+    )
     
     # read how long the file from header 
     curr_data = pd.read_csv(curr_state, sep='\t', header=None)
