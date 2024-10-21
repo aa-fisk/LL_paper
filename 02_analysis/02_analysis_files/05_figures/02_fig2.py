@@ -152,8 +152,8 @@ for part in time_vals:
         anova_file = stage_test_dir / "01_anova.csv"
         ph_file = stage_test_dir / "02_posthoc.csv"
         
-        part_rm.to_csv(anova_file)
-        ph.to_csv(ph_file)
+#        part_rm.to_csv(anova_file)
+#        ph.to_csv(ph_file)
     
     ph_part_df = pd.concat(ph_part_dict)
     ph_total_dict[part] = ph_part_df
@@ -429,7 +429,7 @@ fig.suptitle(
 )
 fig.set_size_inches(11.69, 8.27)
 
-plt.savefig(SAVEFIG, dpi=600)
+#plt.savefig(SAVEFIG, dpi=600)
 
 
-plt.close('all')
+#plt.close('all')
