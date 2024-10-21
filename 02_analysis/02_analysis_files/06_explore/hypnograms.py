@@ -135,8 +135,9 @@ if __name__ == "__main__":
    
     # get list of files 
     files = list(fft_dir_path.glob('*.csv'))
-    
-    for curr_file in files:
+    total_files = len(files)
+
+    for i, curr_file in enumerate(files):
         # read in data 
         data = pd.read_csv(
             curr_file, index_col=0, parse_dates=True
@@ -150,3 +151,5 @@ if __name__ == "__main__":
             showfig=False,
             savefig=True
         )
+
+        print(f"Processed {i}/{total_files}")
