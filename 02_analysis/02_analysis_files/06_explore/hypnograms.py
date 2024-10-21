@@ -62,7 +62,7 @@ def plot_delta_power_for_day(
     )
 
     # Plot each state separately on the same axis 
-    fig, axs = plt.subplots(figsize=(11.69, 8.27))
+    fig, axs = plt.subplots(figsize=(15, 10)) #A2 size 
 
     # Set the x-axis limits for midnight to midnight of the current day
     start_time = pd.Timestamp(curr_day)
@@ -75,7 +75,7 @@ def plot_delta_power_for_day(
     # Set the ylim 
     axs.set_ylim([0, 4e5])
 
-    for state, group in delta_power_curr_day.groupby(state_col):
+    for state, group in delta_power_curr_day.groupby(state_col, observed=True):
        
         if group.empty:  # Check if group is empty
             print(f"Warning: Group for state '{state}' is empty.")
@@ -85,7 +85,7 @@ def plot_delta_power_for_day(
         curr_state_data = group.drop(columns=[state_col])
 
         # Resample and fill missing values with 0s
-        resampled_data = curr_state_data.resample("4s").mean().fillna(0)
+        resampled_data = curr_state_data.resample("4s").mean()
 
         # Plot the resampled data
         axs.plot(
@@ -102,6 +102,7 @@ def plot_delta_power_for_day(
     plt.xticks(rotation=45)
 
     if showfig :
+        fig.set_size_inches(15,10)
         plt.show()
     
     if savefig : 
