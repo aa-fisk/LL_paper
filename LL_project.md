@@ -61,8 +61,26 @@ What's next?
     - or then use the convert function 
     - check if convert function working properly?
     - check interpreted visbrain format correctly?    
+    - can say that the clean and states lined up but made same way
+    so not saying much 
 
+"The remaining lines list each state and its end-point since the 
+start of the recording in seconds. In the example below, 
+the duration of the first occurrence of Awake is 1 
+minute, the duration of the following NREM period is 2 
+minutes, and the duration of the following REM period is 3 minutes"
 
+Awake	70.0
+NREM	190.0
+REM	370.0
+Awake	372.0
+NREM	672.0
+
+    - Okay is end point so that is where misalignment is 
+
+    - aaaaah brain hurty 
+    okay so currently it sets the state to be between x and x+1
+    when we want it to be between x-1 and x
 
 
 - TODO 

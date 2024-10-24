@@ -43,18 +43,20 @@ def convert_annotations_to_time_index(annotations_df, window_length, file_stem):
     )
 
     sleep_states = pd.DataFrame(index=time_index, columns=['State'])
-
+    
     for i in range(len(annotations_df)):
-        current_time = annotations_df['Time'].iloc[i]
+        
+        # grab the state and the correct start time 
+        if i == 0:
+            current_time = annotations_df['Time'].iloc[i]
+        else: 
+            current_time = annotations_df['Time'].iloc[i-1]
         state = annotations_df['State'].iloc[i]
         
-        if i < len(annotations_df) - 1:
-            next_time = annotations_df['Time'].iloc[i + 1]
-            mask = (time_index >= current_time) & (time_index < next_time)
-            sleep_states.loc[mask, 'State'] = state
-        else:
-            mask = (time_index >= current_time)
-            sleep_states.loc[mask, 'State'] = state
+        # grab the correct finish time for current state 
+        next_time = annotations_df['Time'].iloc[i]
+        mask = (time_index >= current_time) & (time_index < next_time)
+        sleep_states.loc[mask, 'State'] = state
 
     sleep_states['State'] = sleep_states['State'].ffill()
     
