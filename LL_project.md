@@ -38,56 +38,31 @@ What's next?
         - check later
 
 - Plotting
-- okay so have rough outline of delta hypnograms 
-- looks like crap
-- colours overlapping and hard to distinguish
-- labels all over the place
-- small image size 
-- no legend 
-- what now? 
-    - tidy up delta hypnograms to make look better 
-    - check out scoring - seems uuhhh weird 
-- tidy up so have better idea of problems for now 
 - Scoring seems to be completely wrong? 
     - sleepsign problem?
     - pipeline problem?
     - given it's almost totally wrong I'm guessing pipeline problem? 
     - but who knows 
 - Set up timeseries viewer and check on the scored files?    
-- Why does thesis start at 0 and mine start at 5e4?
+- Why does thesis xaxis start at 0 and mine start at 5e4?
 
-- which signal are we actually looking at? 
-- what does the time series viewer expect?
-- Can I just use the somnotate comparison to start?  
-- ah good old duration problem again - LL1 180410.edf?
-- so manual is 86400, and auto is 96300
-- why is auto longer? starts at 20000 anyway ..
-- is this causing problems with classifier because being trained on empty 
-data at the end of datasets?
-- should I crop more closely/make sure it's 86400 before training 
-- how would I do that? 
-- where are they
-- manual states? 
-    - yep definitely getting from FFT files 
-- auto states 
-    - data_files/somnotate/auto_states
-    - where getting files from and why are they long?
-    - edf files being created by ascii2edf creating extra at end?
-    - can we crop to just 24 hours in there?
-        - written in c so can't do that in conversion step
-        - but can add in an extra step after that? 
-- okay tried to make a cropper 
-- but resulting signal only 256 length? - should be much longer?
-- selecting wrong length? 
-- okay can't find error in cropping as that comes up with 8640 seconds 
+- okay looking at comparisons 
+- ll1180410 pretty good agreement 
+- LL3 more problems with artefacts 
 
-- okay still error, so the state vector is too long?
-- where state vector coming from? 
-- due to conversion to visbrain format?
-- okay original FFT from sleepsign goes super long - probably something
-about how I exported it
-- need to crop this too
-- do as part of conversion? 
+- check out pipeline alignment problem more likely 
+
+- check fft vs clean_fft 
+    - HMMMM don't get annotations from fft file, get them from auto_states
+    - so how do we compare / line them up?
+    - import from clean_auto_fft
+    - hmmm change how we load annotations and then that changes how 
+    we clean the rest?
+    - or then use the convert function 
+    - check if convert function working properly?
+    - check interpreted visbrain format correctly?    
+
+
 
 
 - TODO 
@@ -95,6 +70,7 @@ about how I exported it
 - do for all derivations 
 - move where saving hypnograms 
 - change away from test dir for fft and cropping
+- check about sleep movement scoring vs awake 
 
 
 

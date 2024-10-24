@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.append(
         os.path.dirname(os.path.abspath(os.getcwd())) + '/01_preprocessing'
 )
-from clean_auto_fft import load_annotations
+from clean_auto_fft import load_annotations, convert_annotations_to_time_index
  
 
 # Parameters
@@ -33,7 +33,14 @@ curr_file_states = states_files[0]
 clean_data = pd.read_csv(
     curr_file_clean, index_col=[0], parse_dates=True
 ).sort_index()
-raw_data = pd.read_csv(curr_file_raw, index_col=[0,1])
+
+#raw_data = pd.read_csv(curr_file_raw, index_col=[0,1])
+states_raw = load_annotations(curr_file_states)
+states_converted = convert_annotations_to_time_index(
+        states_raw,
+        window_length = 4,
+        file_stem = curr_file_states.stem
+)
 
 pdb.set_trace()
 
