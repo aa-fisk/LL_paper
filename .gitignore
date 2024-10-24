@@ -47,3 +47,6 @@ LL_project.md
 
 # somnotate files 
 02_analysis/09_somnotate/*
+
+# pycache? 
+**/__pycache__/
