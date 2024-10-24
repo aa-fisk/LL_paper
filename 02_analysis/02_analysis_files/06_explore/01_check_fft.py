@@ -1,41 +1,46 @@
 import pdb
+import sys
+import os
 import numpy as np 
 import pandas as pd
 import matplotlib.pyplot as plt 
 from pathlib import Path
+sys.path.append(
+        os.path.dirname(os.path.abspath(os.getcwd())) + '/01_preprocessing'
+)
+from clean_auto_fft import load_annotations
+ 
 
 # Parameters
-fft_dir_path = Path(
+clean_fft_dir_path = Path(
     '/Users/angusfisk/Documents/01_personal_files/01_work/11_LL_paper/'
     '02_analysis/01_data_files/07_clean_fft_files/01_script/fro'
 )
+raw_fft_dir_path = clean_fft_dir_path.parents[2] / "06_fft_files" / "01_script"
+states_dir_path = clean_fft_dir_path.parents[2] / "11_somnotate" \
+        / "02_auto_states"
 
-files = list(fft_dir_path.glob('LL4*'))
-curr_file = files[0]
+curr_anim = "LL4"
+clean_files = list(clean_fft_dir_path.glob(f'{curr_anim}*'))
+raw_files = list(raw_fft_dir_path.glob(f'{curr_anim}*'))
+states_files = list(states_dir_path.glob(f'{curr_anim}*'))
 
-# read in data 
-data = pd.read_csv(
-    curr_file, index_col=[0, -1], parse_dates=True
+curr_file_clean = clean_files[0]
+curr_file_raw = raw_files[0]
+curr_file_states = states_files[0] 
+
+# read in clean and raw file 
+clean_data = pd.read_csv(
+    curr_file_clean, index_col=[0], parse_dates=True
 ).sort_index()
-#data = pd.read_csv(curr_file, index_col=[0,1])
-#for sleepsign fft files, header=17, skipfooter=(64825 - 2162))
+raw_data = pd.read_csv(curr_file_raw, index_col=[0,1])
+
+pdb.set_trace()
+
+# select the same day 
+day = pd.to_datetime(curr_file_raw.stem[-6:], yearfirst=True)
+clean_day = clean_data.loc[str(day.date())]
 
 
-fft_data = data.xs("fro", level=1)
-
-# resample so can actually plot 
-fft_data_resample = fft_data.drop("State", axis=1).resample("1min").mean()
-
-# try plotting 
-fig, ax = plt.subplots()
-
-ax.plot(fft_data_resample.iloc[:, 0])
-
-plt.show()
-
-
-
-
-# code for checking clean auto fft 
-
+# compare annotations 
 
