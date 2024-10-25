@@ -1,4 +1,4 @@
-LL_project
+Scoring seems to be completely wrong? LL_project
 
 
 # Aims
@@ -28,59 +28,40 @@ TODO
 
 
 What's next?
-- Labelling days
-- which days are which? 
-    - 09 is baseline day
-    - 10 is first day of lights on - starting at 0837
-    - how does this lineup with the time index we have created? 
-    - what time do the recordings actually start? 0837?
-    - assuming that lights on and start of recording are at the same time
-        - check later
+- Scoring still has problems but good enough if go through
+with refined state intervals and adjust using somnotate
+- Can avoid doing manual sleep scoring for now 
+- Options 
+    - Plotting 
+        - SWA per hour and SWE over time 
+        - total sleep time / NREM/REM light/dark
+        - update hynpgram colours 
+    - Processing
+        - manually review sleep scoring
+            - how do one at a time?
+        - Find period and correct for each animal to get 24 hour days
+        - Figure out brief awakenings
+            - Do they break episode duration at the moment?
 
-- Plotting
-- Scoring seems to be completely wrong? 
-    - sleepsign problem?
-    - pipeline problem?
-    - given it's almost totally wrong I'm guessing pipeline problem? 
-    - but who knows 
-- Set up timeseries viewer and check on the scored files?    
-- Why does thesis xaxis start at 0 and mine start at 5e4?
+- correcting for period?
+    - Do we want values per 24 hours anyway as part of analysis/
+    to compare to?
+    - or just go straight to period correction
+    - I think just get on with correcting for period
+    - How? PIR vs EEG data?
+        - try on both?
+        - fourier transform whole data 
+        - lombscargle
+        - enright 
+        - mFourFit 
+            - Other good version but would have to write own script 
+        - MESA 
+            - have python implementation 
+            https://github.com/martini-alessandro/Maximum-Entropy-Spectrum
 
-- okay looking at comparisons 
-- ll1180410 pretty good agreement 
-- LL3 more problems with artefacts 
 
-- check out pipeline alignment problem more likely 
 
-- check fft vs clean_fft 
-    - HMMMM don't get annotations from fft file, get them from auto_states
-    - so how do we compare / line them up?
-    - import from clean_auto_fft
-    - hmmm change how we load annotations and then that changes how 
-    we clean the rest?
-    - or then use the convert function 
-    - check if convert function working properly?
-    - check interpreted visbrain format correctly?    
-    - can say that the clean and states lined up but made same way
-    so not saying much 
 
-"The remaining lines list each state and its end-point since the 
-start of the recording in seconds. In the example below, 
-the duration of the first occurrence of Awake is 1 
-minute, the duration of the following NREM period is 2 
-minutes, and the duration of the following REM period is 3 minutes"
-
-Awake	70.0
-NREM	190.0
-REM	370.0
-Awake	372.0
-NREM	672.0
-
-    - Okay is end point so that is where misalignment is 
-
-    - aaaaah brain hurty 
-    okay so currently it sets the state to be between x and x+1
-    when we want it to be between x-1 and x
 
 
 - TODO 
@@ -89,7 +70,19 @@ NREM	672.0
 - move where saving hypnograms 
 - change away from test dir for fft and cropping
 - check about sleep movement scoring vs awake 
+- Why does thesis xaxis start at 0 and mine start at 5e4?
+    - fill na as 0?
 
+
+- Labelling days
+- which days are which? 
+    - 09 is baseline day
+    - 10 is first day of lights on - starting at 0837
+    - how does this lineup with the time index we have created? 
+    - what time do the recordings actually start? 0837?
+    - assuming that lights on and start of recording are at the same time
+        - check later
+        - check PIR files 
 
 
 Pipeline
