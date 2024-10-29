@@ -58,10 +58,43 @@ with refined state intervals and adjust using somnotate
         - MESA 
             - have python implementation 
             https://github.com/martini-alessandro/Maximum-Entropy-Spectrum
+        - just use MESA as easiest 
 
+MESA period estimation 
+- Got working but showing massive peak around 0 and nothing else 
+- hmmmm 
+- (could just use something else?)
+- also why a separate line at 0 
+- try log both x and y 
+- what am I even looking for? What is 24 hours in Hz
+1/86400 = 1.158e-05
+- Look at paper for info guiding interpretation
+- We are getting highest values around the -5 range so that's good? 
+- but want to extend that to lower frequencies?
+- how do we define the range of values we are looking at? 
+want values between 20 and 28 hours 
+- Because highest values are at such low frequences we are getting 
+peak basically at 0 
+- okay so can define frequencies in spectrum 
 
+- everything seems to just come back to a peak at 0
+- same for multiple animals 
 
+- What is going wrong? 
+    - Data
+        - Just visually they definitely have rhythms  
+    - Scripts?
+        - something to do with the frequencies I am defining?
+- look at examples in repo? 
+- uses np.fft.fftfreq(N, d=dt) to get frequency? - gets similar
+to default plot when used 
+- why does it always go to max around 0
+- always has max around 0 and when running with defaults only signal 
+apperas to be much much higher than hourly range 
 
+- okay by selecting very carefully around the area get some useable
+results.
+- However for one animal getting nonsense despite good data 
 
 
 - TODO 
