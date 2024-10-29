@@ -17,6 +17,8 @@ dependencies:
 - notedown == 1.5.1
 - pip
 - pip:
+  - memspectrum  
+  - jedi 
   - git+https://github.com/aa-fisk/sleepPy.git@main
   - git+https://github.com/aa-fisk/actiPy.git@main
   - /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate
