@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 from memspectrum import MESA
+from astropy.timeseries import LombScargle
+from actiPy import periodogram
 
 # directories 
 pir_dir = Path(
@@ -61,6 +63,26 @@ for col in ll_data:
     curr_data = ll_data.loc[:, col] 
     curr_period = get_period_MESA(curr_data, figshow=True)
     period_list.append(curr_period)
+
+
+# periods = periodogram.get_period(ll_data)
+period_list = []
+hr_range = ["19h", "26h"]
+for no, curr_data in enumerate(ll_data):
+    period_times = periodogram._period_df(
+        ll_data, 
+        animal_no=no,
+        low_time=hr_range[0],
+        high_time=hr_range[1]
+    )
+    fig, ax = plt.subplots()
+    ax.plot(period_times.index.get_level_values(1), period_times.values)
+    fig.show()
+    period_index = np.argmax(period_times)
+    period = (period_times.iloc[period_index].name[1]).total_seconds() / 3600
+    period_list.append(period)
+        
+
 
 
 

@@ -96,6 +96,23 @@ apperas to be much much higher than hourly range
 results.
 - However for one animal getting nonsense despite good data 
 
+- what have I used previously 
+in actipy? 
+LombScargle
+Enright
+
+just used astropy.stats Lombscargle
+okay got basic version but need to mess about with frequency
+and power again 
+
+Got working with my old actipy version kind of 
+Returning >24 hours? not right
+Want to plot to see what's going on 
+Seems like accurate result but actually that is what we expect 
+shut up angus 
+
+
+
 
 - TODO 
 - change colours 

@@ -19,7 +19,8 @@ dependencies:
 - pip:
   - memspectrum  
   - jedi 
+  - parso
   - git+https://github.com/aa-fisk/sleepPy.git@main
-  - git+https://github.com/aa-fisk/actiPy.git@main
+  - git+https://github.com/aa-fisk/actiPy.git@development
   - /Users/angusfisk/Documents/01_personal_files/01_work/09_github_repos/somnotate
 
