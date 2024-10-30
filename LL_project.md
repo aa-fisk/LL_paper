@@ -44,73 +44,18 @@ with refined state intervals and adjust using somnotate
             - Do they break episode duration at the moment?
 
 - correcting for period?
-    - Do we want values per 24 hours anyway as part of analysis/
-    to compare to?
-    - or just go straight to period correction
-    - I think just get on with correcting for period
-    - How? PIR vs EEG data?
-        - try on both?
-        - fourier transform whole data 
-        - lombscargle
-        - enright 
-        - mFourFit 
-            - Other good version but would have to write own script 
-        - MESA 
-            - have python implementation 
-            https://github.com/martini-alessandro/Maximum-Entropy-Spectrum
-        - just use MESA as easiest 
+    - got it working using LombScargle from my old actiPy version
+    - do we need to save period? small enough can kind of just do it
+    in the same script? 
+    - want to get period for all animals and label them as such 
+EEG1 file = mouse 1-4
+EEG2 file = mouse 5-8
 
-MESA period estimation 
-- Got working but showing massive peak around 0 and nothing else 
-- hmmmm 
-- (could just use something else?)
-- also why a separate line at 0 
-- try log both x and y 
-- what am I even looking for? What is 24 hours in Hz
-1/86400 = 1.158e-05
-- Look at paper for info guiding interpretation
-- We are getting highest values around the -5 range so that's good? 
-- but want to extend that to lower frequencies?
-- how do we define the range of values we are looking at? 
-want values between 20 and 28 hours 
-- Because highest values are at such low frequences we are getting 
-peak basically at 0 
-- okay so can define frequencies in spectrum 
-
-- everything seems to just come back to a peak at 0
-- same for multiple animals 
-
-- What is going wrong? 
-    - Data
-        - Just visually they definitely have rhythms  
-    - Scripts?
-        - something to do with the frequencies I am defining?
-- look at examples in repo? 
-- uses np.fft.fftfreq(N, d=dt) to get frequency? - gets similar
-to default plot when used 
-- why does it always go to max around 0
-- always has max around 0 and when running with defaults only signal 
-apperas to be much much higher than hourly range 
-
-- okay by selecting very carefully around the area get some useable
-results.
-- However for one animal getting nonsense despite good data 
-
-- what have I used previously 
-in actipy? 
-LombScargle
-Enright
-
-just used astropy.stats Lombscargle
-okay got basic version but need to mess about with frequency
-and power again 
-
-Got working with my old actipy version kind of 
-Returning >24 hours? not right
-Want to plot to see what's going on 
-Seems like accurate result but actually that is what we expect 
-shut up angus 
-
+- okay having problem selecting just the LL section in EEG 1? 
+time index not lined up perfectly, thought that shouldn't matter?
+EEG2 is fine but EEG1 not monotonically increasing for some reason
+Resample data? 
+force set index - but still not increasing 
 
 
 
