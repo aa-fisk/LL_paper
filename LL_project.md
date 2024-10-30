@@ -45,15 +45,11 @@ with refined state intervals and adjust using somnotate
 
 
 - problem
-    - since selecting more data, always going to be higher in corrected?- problem
-        - since selecting more data, always going to be higher in corrected?- problem
-            - since selecting more data, always going to be higher in corrected?- problem
-                - since selecting more data, always going to be higher in corrected?- problem
-                    - since selecting more data, always going to be higher in corrected?- problem
-                        - since selecting more data, always going to be higher in corrected?- problem
-                            - since selecting more data, always going to be higher in corrected?- problem
-                                - since selecting more data, always going to be higher in corrected?- problem
-                                    - since selecting more data, always going to be higher in corrected?
+    - since selecting more data, always going to be higher in corrected?
+
+So what am I actually trying to do? 
+do state count for each animal, all states
+so have calculate state_count, next is do for all animals 
 
 
 
