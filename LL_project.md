@@ -61,6 +61,23 @@ but wait a second already in pir_data? so can't be problem?
 Hmmm dropping NaN did not fix it ?
 I need a break this is going around and driving my head in
 
+Okay back to it.
+What is going on? Was working before but now just returning NaN
+check if its in the values by creating fake ones 
+- random numbers give us good answer, so something about values 
+- so question is what is different? 
+    - Null values
+    - Where are null values? 
+    - present in original df?
+        - In csv?
+        - can't find NaN, Na, Null in csv file 
+    - so why are we getting them when read in?
+        - hmm just have 1 when reading in original data but 
+        turning into clean is causing problems 
+        - okay so resampling step is what turns adds lots of null values 
+
+
+
 - TODO 
 - change colours 
 - do for all derivations 

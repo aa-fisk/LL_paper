@@ -11,8 +11,11 @@ pir_dir = Path(
     "/Users/angusfisk/Documents/01_personal_files/01_work/"
     "11_LL_paper/02_analysis/01_data_files/10_pirfiles"
 )
+save_name = pir_dir.parent / "12_periods.csv"
 pir_files = list(pir_dir.glob("*.csv"))
 hr_range = ["19h", "26h"]
+ll_start = pd.to_datetime("2018-04-10 07:00:00")
+ll_end = pd.to_datetime("2018-04-25 07:00:00")
 
 # read in data for all animals
 ll_dfs = []
@@ -28,8 +31,6 @@ for curr_file in pir_files:
     pir_data_resampled = pir_data_resampled.interpolate()
 
     # select just the LL bit 
-    ll_start = pd.to_datetime("2018-04-10 07:00:00")
-    ll_end = pd.to_datetime("2018-04-25 07:00:00")
     ll_data = pir_data_resampled.loc[ll_start:ll_end]
     
     # set correct column names for concat
@@ -60,5 +61,7 @@ for i, curr_period in enumerate(period_times):
     period = (curr_period.iloc[period_index].name).total_seconds() / 3600
     period_dict[all_data.columns[i]] = period
 
+period_df = pd.DataFrame.from_dict(period_dict, orient='index')
+period_df.to_csv(save_name)
 
 
