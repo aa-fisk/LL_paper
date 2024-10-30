@@ -11,7 +11,7 @@ import_dir = Path(
     "11_LL_paper/02_analysis/01_data_files/07_clean_fft_files/01_script"
 ) / derivation
 period_file = list(import_dir.parents[2].glob("*periods*"))
-save_dir = import_dir.parent / "02_corrected" / derivation
+save_dir = import_dir.parents[1] / "02_corrected" / derivation
 files = list(import_dir.glob("*.csv"))
 
 # constants 
@@ -66,8 +66,13 @@ if __name__ == "__main__":
         ).sort_index()
         data_ll = data.loc[ll_start:ll_end]
         curr_period = periods.loc[curr_file.stem].values[0]
-
+        
+        # correct for period 
+        new_data = process_period_data(data_ll, period=curr_period)
+    
         # save the data 
+        save_name = save_dir / str(curr_file.stem  + ".csv")
+        new_data.to_csv(save_name)
 
         
 
