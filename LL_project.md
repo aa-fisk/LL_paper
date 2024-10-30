@@ -43,38 +43,35 @@ with refined state intervals and adjust using somnotate
         - Figure out brief awakenings
             - Do they break episode duration at the moment?
 
-- correcting for period?
-    - got it working using LombScargle from my old actiPy version
-    - do we need to save period? small enough can kind of just do it
-    in the same script? 
-    - want to get period for all animals and label them as such 
-EEG1 file = mouse 1-4
-EEG2 file = mouse 5-8
+- Have created periods, now to correct
+- read in and save as clean_ffts in new dir 
+- okay what do I actually want to do? 
+- for plotting and calculating data over 24 hours, instead of using 
+24 hours, I want to use the estimated period 
+- Do I want to do this on a plot by plot basis? or for all data first
+- going to be doing a lot so assume want plot by plot 
+- Assume just going to calculate activity over circadian day, 
+    how would I do that?
+- some things are fairly easy
+- question is what we want to do with data and how much we want to lose?
+- so calculate total sleep/REM/NREM
+    just count over period rather than 24 hours.
+- sleep distribution
+    - need to reshape the data because can't be 4s anymore as
+    will need to fit more data into the "24hours" circadian day
+    so will have to reduce
+    - so slice, then re-index based on an index with calculated 
+    frequency? 
+steps 
+    - select day1, day2, day3. 
+    - calculate base freq
+    - create a new index based on the correct freq
+    - re-index
+    - save 
 
-Okay so returning NaN from period get ?
-Because resampled index?
-because some y's are Nan
-is that from all_data
-yes, something to do with resample not quite lining up I dont think
-but wait a second already in pir_data? so can't be problem? 
+    - Have got this in actipy, why not use? 
+    - can't just do this waaay more simply by just re-indexing the whole thing? 
 
-Hmmm dropping NaN did not fix it ?
-I need a break this is going around and driving my head in
-
-Okay back to it.
-What is going on? Was working before but now just returning NaN
-check if its in the values by creating fake ones 
-- random numbers give us good answer, so something about values 
-- so question is what is different? 
-    - Null values
-    - Where are null values? 
-    - present in original df?
-        - In csv?
-        - can't find NaN, Na, Null in csv file 
-    - so why are we getting them when read in?
-        - hmm just have 1 when reading in original data but 
-        turning into clean is causing problems 
-        - okay so resampling step is what turns adds lots of null values 
 
 
 

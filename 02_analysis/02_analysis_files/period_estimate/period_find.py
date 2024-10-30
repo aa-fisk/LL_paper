@@ -46,13 +46,15 @@ all_data = pd.concat(ll_dfs, axis=1, join='inner')
 
 
 # calculate period for all animals 
-period_times = [periodogram._period_df(
-    all_data, 
-    animal_no=x,
-    low_time=hr_range[0],
-    high_time=hr_range[1],
-    drop_level=False
-) for x in range(len(all_data.columns))]
+period_times = [
+    periodogram._period_df(
+        all_data, 
+        animal_no=x,
+        low_time=hr_range[0],
+        high_time=hr_range[1],
+        drop_level=False
+    ) for x in range(len(all_data.columns))
+]
 
 # convert into hours 
 period_dict = {}
