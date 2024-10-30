@@ -51,13 +51,15 @@ with refined state intervals and adjust using somnotate
 EEG1 file = mouse 1-4
 EEG2 file = mouse 5-8
 
-- okay having problem selecting just the LL section in EEG 1? 
-time index not lined up perfectly, thought that shouldn't matter?
-EEG2 is fine but EEG1 not monotonically increasing for some reason
-Resample data? 
-force set index - but still not increasing 
+Okay so returning NaN from period get ?
+Because resampled index?
+because some y's are Nan
+is that from all_data
+yes, something to do with resample not quite lining up I dont think
+but wait a second already in pir_data? so can't be problem? 
 
-
+Hmmm dropping NaN did not fix it ?
+I need a break this is going around and driving my head in
 
 - TODO 
 - change colours 
