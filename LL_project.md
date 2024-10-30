@@ -43,35 +43,17 @@ with refined state intervals and adjust using somnotate
         - Figure out brief awakenings
             - Do they break episode duration at the moment?
 
-- Have created periods, now to correct
-- read in and save as clean_ffts in new dir 
-- okay what do I actually want to do? 
-- for plotting and calculating data over 24 hours, instead of using 
-24 hours, I want to use the estimated period 
-- Do I want to do this on a plot by plot basis? or for all data first
-- going to be doing a lot so assume want plot by plot 
-- Assume just going to calculate activity over circadian day, 
-    how would I do that?
-- some things are fairly easy
-- question is what we want to do with data and how much we want to lose?
-- so calculate total sleep/REM/NREM
-    just count over period rather than 24 hours.
-- sleep distribution
-    - need to reshape the data because can't be 4s anymore as
-    will need to fit more data into the "24hours" circadian day
-    so will have to reduce
-    - so slice, then re-index based on an index with calculated 
-    frequency? 
-steps 
-    - select day1, day2, day3. 
-    - calculate base freq
-    - create a new index based on the correct freq
-    - re-index
-    - save 
 
-    - Have got this in actipy, why not use? 
-    - can't just do this waaay more simply by just re-indexing the whole thing? 
-
+- problem
+    - since selecting more data, always going to be higher in corrected?- problem
+        - since selecting more data, always going to be higher in corrected?- problem
+            - since selecting more data, always going to be higher in corrected?- problem
+                - since selecting more data, always going to be higher in corrected?- problem
+                    - since selecting more data, always going to be higher in corrected?- problem
+                        - since selecting more data, always going to be higher in corrected?- problem
+                            - since selecting more data, always going to be higher in corrected?- problem
+                                - since selecting more data, always going to be higher in corrected?- problem
+                                    - since selecting more data, always going to be higher in corrected?
 
 
 
