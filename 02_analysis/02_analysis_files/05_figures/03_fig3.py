@@ -4,6 +4,10 @@
 # power
 
 # imports
+import sleepPy.plots as plot
+import sleepPy.preprocessing as prep
+import sys
+import pathlib
 import pandas as pd
 import numpy as np
 import pingouin as pg
@@ -12,10 +16,6 @@ import matplotlib.gridspec as gs
 import matplotlib.dates as mdates
 import seaborn as sns
 sns.set()
-import pathlib
-import sys
-import sleepPy.preprocessing as prep
-import sleepPy.plots as plot
 
 # define constants
 INDEX_COLS = [0, 1, 2]
@@ -24,7 +24,7 @@ BASE_FREQ = "4S"
 OFFSET = pd.Timedelta("30m")
 SAVEFIG = pathlib.Path("../../03_analysis_outputs/05_figures/03_fig3.png")
 
-# Step 1 Import files and tidy #################################################
+# Step 1 Import files and tidy ###########################################
 
 # Read all Spectral files into a df
 file_dir = pathlib.Path('../../01_data_files/07_clean_fft_files')
@@ -46,7 +46,7 @@ stage_dict = dict(zip(stage_dfnames, stage_list))
 stage_df = pd.concat(stage_dict)
 stage_df = stage_df.loc[:, :"LL_day2"]
 
-# Step 2 Get hourly sleep data together ########################################
+# Step 2 Get hourly sleep data together ##################################
 
 # Calculate the proportion of each hour in the given stages
 sleep_stages = ["NR", "N1", "R", "R1"]
@@ -66,7 +66,7 @@ hourly_sleep_df = pd.concat([hourly_mean, hourly_sem], axis=1)
 hourly_columns = ["Mean", "SEM"]
 hourly_sleep_df.columns = hourly_columns
 
-# Step 3 Get cumulative NREM and delta power together ##########################
+# Step 3 Get cumulative NREM and delta power together ####################
 
 # Calculate cumulative NREM sleep
 nrem_stages = ["NR", "N1"]
@@ -87,7 +87,7 @@ nrem_mean_df = pd.concat([nrem_means, nrem_sems], axis=1)
 nrem_mean_df.columns = hourly_columns
 nrem_mean_df = nrem_mean_df.loc[idx[:, :"2018-01-01 23:59"], :]
 
-# Calculate Delta Power ########################################################
+# Calculate Delta Power ##################################################
 
 # Get sum and mean of artefact free delta power of a single derivation
 band = ["Delta"]
@@ -144,15 +144,17 @@ delta_sum_hr_cs_fill = delta_sum_hourly_cumsum.fillna(method="ffill")
 #     ] = delta_sum_hr_cs_fill.loc[idx["LL1", "LL_day1", :], :]
 
 # normalise to max delta value at each animals baseline day
+
+
 def norm_to_max_baseline(data):
     days = data.index.get_level_values(1).unique()
     animals = data.index.get_level_values(0).unique()
     data_list = []
     for animal in animals:
         baseline = data.loc[
-                   idx[animal, days[0], "2018-01-01 23:30:00"],
-                   :
-                   ].values[0][0]
+            idx[animal, days[0], "2018-01-01 23:30:00"],
+            :
+        ].values[0][0]
         day_list = []
         for day in days:
             exp_day = data.loc[idx[animal, day, :, :], :]
@@ -162,6 +164,8 @@ def norm_to_max_baseline(data):
         data_list.append(day_df)
     normalised_data = pd.concat(data_list)
     return normalised_data
+
+
 delta_sum_hr_cs_norm = norm_to_max_baseline(delta_sum_hr_cs_fill)
 
 # Tidy mean and SEM values into a df
@@ -174,7 +178,7 @@ delta_sum_cs_df = pd.concat(
 delta_sum_cs_df.columns = hourly_columns
 delta_sum_cs_df = delta_sum_cs_df.loc[idx[:, :"2018-01-01 23:59"], :]
 
-### Hourly Mean activity of delta power
+# Hourly Mean activity of delta power
 
 # get hourly mean and SEM of mean delta power
 delta_mean_hr = delta_mean_nrem.groupby(
@@ -185,12 +189,16 @@ delta_mean_hr = delta_mean_nrem.groupby(
     loffset=OFFSET,
 ).mean()
 # normalise to baseline
+
+
 def norm_to_base(anim_df,
-                 baseline_str: str="Baseline_0"):
+                 baseline_str: str = "Baseline_0"):
     base_values = anim_df.loc[idx[:, baseline_str, :], :]
     normalise_values = base_values.mean()
     normalised_df = (anim_df / normalise_values) * 100
     return normalised_df
+
+
 delta_mean_hr_norm = delta_mean_hr.groupby(
     level=0
 ).apply(norm_to_base)
@@ -219,8 +227,7 @@ delta_mean_hr_df = pd.concat(
 delta_mean_hr_df.columns = hourly_columns
 
 
-
-############# Stats ############################################################
+############# Stats ######################################################
 
 # 1. Does constant light affect the proportion of each hour spent asleep?
 # Two way anova of HourxDay on proportion asleep
@@ -256,7 +263,7 @@ pg.print_table(test_rm)
 ph_dict = {}
 for hour in hours:
     print(hour)
-    hour_df = long_df.query("%s == '%s'"%(hour_col, hour))
+    hour_df = long_df.query("%s == '%s'" % (hour_col, hour))
     ph = pg.pairwise_tukey(
         dv=dep_var,
         between=day_col,
@@ -290,7 +297,7 @@ pg.print_table(swe_anova)
 ph_dict = {}
 for hour in hours[:-1]:
     print(hour)
-    hour_df = swe_anova_df.query("%s == '%s'"%(hour_col, hour))
+    hour_df = swe_anova_df.query("%s == '%s'" % (hour_col, hour))
     ph = pg.pairwise_tukey(
         dv=dep_var,
         between=day_col,
@@ -305,11 +312,11 @@ swa_ps_file = swa_test_dir / ph_csv
 swe_anova.to_csv(swa_anova_file)
 delta_mean_ph_df.to_csv(swa_ps_file)
 
-    
+
 # 2. Does constant light change the amount or intensity of sleep?
 # One way anova on the max values of time of NREM sleep and Delta power
 # Post hoc - either linear regression or tukeys post hoc for each hour?
-max_nrem_time = ((nrem_c_hourly.groupby(level=0).max() * 4)/60)/60
+max_nrem_time = ((nrem_c_hourly.groupby(level=0).max() * 4) / 60) / 60
 test_df = max_nrem_time.stack().reset_index()
 test_df.columns = [stat_colnames[x] for x in (0, 2, 3)]
 
@@ -331,7 +338,7 @@ test_df.columns = stat_colnames
 ph_dict = {}
 for hour in hours:
     print(hour)
-    curr_hour_df = test_df.query("%s == '%s'"%(hour_col, hour))
+    curr_hour_df = test_df.query("%s == '%s'" % (hour_col, hour))
     ph = pg.pairwise_tukey(
         dv=dep_var,
         between=day_col,
@@ -368,7 +375,7 @@ test_df.columns = stat_colnames
 ph_dict = {}
 for hour in hours[:-1]:
     print(hour)
-    curr_hour_df = test_df.query("%s == '%s'"%(day_col, hour))
+    curr_hour_df = test_df.query("%s == '%s'" % (day_col, hour))
     ph = pg.pairwise_tukey(
         dv=dep_var,
         between=hour_col,
@@ -383,7 +390,7 @@ swe_ps_file = swe_test_dir / ph_csv
 swa_anova.to_csv(swe_anova_file)
 delta_sum_ph_df.to_csv(swe_ps_file)
 
-################################################################################
+##########################################################################
 # Step 4 plot
 fig = plt.figure()
 
@@ -411,14 +418,14 @@ hr_df_list = [
 ]
 
 for curr_df, curr_ax in zip(hr_df_list, hourly_sleep_axis):
-    
+
     for day in days:
         # select just the data to plot
         curr_day = curr_df.loc[day]
-        
+
         mean_data = curr_day["Mean"]
         sem_data = curr_day["SEM"]
-        
+
         curr_ax.errorbar(
             mean_data.index,
             mean_data.values,
@@ -431,14 +438,14 @@ for curr_df, curr_ax in zip(hr_df_list, hourly_sleep_axis):
         # set the xlimits
         xmin = "2018-01-01 00:00:00"
         xmax = "2018-01-02 00:00:00"
-        
+
         # set the xlabel
         xlabel = "Time of day, CT hours"
         curr_ax.set(
             xlim=[xmin, xmax],
             xlabel=xlabel
         )
-        
+
         # set times to look good
         curr_ax.set_xticklabels(
             curr_ax.get_xticklabels(),
@@ -446,16 +453,15 @@ for curr_df, curr_ax in zip(hr_df_list, hourly_sleep_axis):
             ha='right'
         )
         curr_ax.xaxis.set_major_formatter(xfmt)
-        
+
     # dark_index = curr_day.loc["2018-01-01 12:00:00":"2018-01-02 00:00:00"].index
-    alpha=0.1
+    alpha = 0.1
     curr_ax.axvline("2018-01-01 12:00:00", color='k', linestyle='--')
     # curr_ax.fill_between(dark_index,
     #                      500,
     #                      0,
     #                      facecolors='k',
     #                      alpha=alpha)
-
 
 
 # tidy hourly prop
@@ -508,7 +514,7 @@ for curr_ph_df, curr_ax in zip([hourly_ph_df, delta_mean_ph_df],
         curr_ax,
         sig_line_ylevel_day1
     )
-    ycoord_data_val_day2 =  plot.sig_line_coord_get(
+    ycoord_data_val_day2 = plot.sig_line_coord_get(
         curr_ax,
         sig_line_ylevel_day2
     )
@@ -520,14 +526,14 @@ for curr_ph_df, curr_ax in zip([hourly_ph_df, delta_mean_ph_df],
     # xvalues from test
     sig_vals_hourly_day1 = plot.sig_locs_get(curr_ph_df)
     sig_vals_hourly_day2 = plot.sig_locs_get(curr_ph_df, index_level2val=1)
-    
+
     # plot on axes
     for day_no, sig_vals_hourly in enumerate(
             [sig_vals_hourly_day1, sig_vals_hourly_day2]
     ):
         curr_colour = colours[day_no]
         curr_ycoord = ycoords_days[day_no]
-        
+
         xvals = [plot.get_xval_dates(
             x,
             minus_val=plus_val,
@@ -547,7 +553,6 @@ for curr_ph_df, curr_ax in zip([hourly_ph_df, delta_mean_ph_df],
             )
 
 
-
 # Plot RHS cumulative sleep and delta
 
 # create subplots on RHS
@@ -565,12 +570,12 @@ bottom_ax = plt.subplot(right_col[1])
 for day in days:
     # select the data
     nrem_day = nrem_mean_df.loc[day]
-    
+
     nrem_day = ((nrem_day * 4) / 60) / 60
-    
+
     mean_nrem = nrem_day["Mean"]
     sem_nrem = nrem_day["SEM"]
-    
+
     # plot with error bars
     top_ax.errorbar(
         mean_nrem.index,
@@ -580,7 +585,7 @@ for day in days:
         label=day,
         capsize=capsize
     )
-    
+
     # set xlimits
     # set ylabel
     nrem_ylabel = "Cumulative NREM sleep, hours, mean +/-SEM"
@@ -594,7 +599,7 @@ for day in days:
         ylabel=nrem_ylabel,
         title=nrem_title
     )
-    
+
     # pretty times
     top_ax.set_xticklabels(
         top_ax.get_xticklabels(),
@@ -615,10 +620,12 @@ top_ax.axvline("2018-01-01 12:00:00", color='k', linestyle='--')
 # stats
 ycoord_data_val = plot.sig_line_coord_get(top_ax, 0.95)
 nrem_cs_sigxvals = plot.sig_locs_get(nrem_cs_ph_df)
-nrem_xvals_trans = [plot.get_xval_dates(x,
-                         minus_val=plus_val,
-                         plus_val=plus_val,
-                         curr_ax=top_ax) for x in nrem_cs_sigxvals]
+nrem_xvals_trans = [
+    plot.get_xval_dates(
+        x,
+        minus_val=plus_val,
+        plus_val=plus_val,
+        curr_ax=top_ax) for x in nrem_cs_sigxvals]
 
 for xval_pair in nrem_xvals_trans:
     xval_min = xval_pair[0]
@@ -632,10 +639,10 @@ for xval_pair in nrem_xvals_trans:
 for day in days:
     # select the data
     delta_day = delta_sum_cs_df.loc[day]
-    
+
     mean_delta = delta_day["Mean"]
     sem_delta = delta_day["SEM"]
-    
+
     bottom_ax.errorbar(
         mean_delta.index,
         mean_delta.values,
@@ -644,7 +651,7 @@ for day in days:
         label=day,
         capsize=capsize
     )
-    
+
     # set the limits
     # set the ylabel
     delta_ylabel = "Cumulative SWE, % Baseline, mean +/-SEM"
@@ -660,7 +667,7 @@ for day in days:
         ylabel=delta_ylabel,
         title=delta_title
     )
-    
+
     bottom_ax.set_xticklabels(
         bottom_ax.get_xticklabels(),
         rotation=30,
@@ -694,5 +701,3 @@ fig.set_size_inches(11.69, 8.27)
 plt.savefig(SAVEFIG, dpi=600)
 
 plt.close('all')
-
-

@@ -1,5 +1,9 @@
 # Script for making Figure 2. Delta hypnogram and Time in stages
 
+import sleepPy.plots as plot
+import sleepPy.preprocessing as prep
+import sys
+import pathlib
 import pandas as pd
 import numpy as np
 import pingouin as pg
@@ -9,10 +13,6 @@ import matplotlib.gridspec as gs
 import matplotlib.dates as mdates
 import seaborn as sns
 sns.set()
-import pathlib
-import sys
-import sleepPy.preprocessing as prep
-import sleepPy.plots as plot
 
 # define constants
 INDEX_COLS = [0, 1, 2]
@@ -21,7 +21,7 @@ BASE_FREQ = "4S"
 SAVEFIG = pathlib.Path("../../03_analysis_outputs/05_figures/02_fig2.png")
 
 
-######### Step 1 Import the files
+# Step 1 Import the files
 file_dir = pathlib.Path('../../01_data_files/07_clean_fft_files')
 file_names = sorted(file_dir.glob("*7*.csv"))
 df_list = [prep.read_file_to_df(x, index_col=INDEX_COLS) for x in file_names]
@@ -40,7 +40,7 @@ stage_dict = dict(zip(stage_dfnames, stage_list))
 stage_df = pd.concat(stage_dict)
 stage_df = stage_df.loc[:, :"LL_day2"]
 
-########## Step 2 create delta power file
+# Step 2 create delta power file
 band = ["Delta"]
 range_to_sum = ("0.50Hz", "4.00Hz")
 delta_df = prep.create_df_for_single_band(
@@ -51,7 +51,7 @@ delta_df = prep.create_df_for_single_band(
     mean=True,
 )
 
-######### Step 3 Count sleep, NREM, REM and wake
+# Step 3 Count sleep, NREM, REM and wake
 sleep_stages = ["NR", "N1", "R", "R1"]
 nrem_stages = ["NR", "N1"]
 rem_stages = ["R", "R1"]
@@ -71,25 +71,25 @@ total_sleep = ((prep.lightdark_df(
     stage_list=sleep_stages,
     data_list=False,
     **names
-)*4)/60)/60
+) * 4) / 60) / 60
 nrem_sleep = ((prep.lightdark_df(
     unstacked_stages,
     stage_list=nrem_stages,
     data_list=False,
     **names
-)*4)/60)/60
+) * 4) / 60) / 60
 rem_sleep = ((prep.lightdark_df(
     unstacked_stages,
     stage_list=rem_stages,
     data_list=False,
     **names
-)*4)/60)/60
+) * 4) / 60) / 60
 wake_count = ((prep.lightdark_df(
     unstacked_stages,
     stage_list=wake_stages,
     data_list=False,
     **names
-)*4)/60)/60
+) * 4) / 60) / 60
 
 totals_dict = {
     "Sleep": total_sleep,
@@ -99,7 +99,7 @@ totals_dict = {
 }
 totals_df = pd.concat(totals_dict)
 
-# Stats ########################################################################
+# Stats ##################################################################
 
 # 1. Does LL affect the time in each stage?
 # Repeated Measures 1 way anova for each stage type.
@@ -124,12 +124,12 @@ for part in time_vals:
     ph_part_dict = {}
     for key, df in zip(totals_dict.keys(), totals_dict.values()):
         print(key)
-        
+
         # tidy data
         long_df = df.stack().reset_index()
         long_df.columns = stat_colnames
         part_df = long_df.query("%s == '%s'" % (time, part))
-        
+
         # do anova
         part_rm = pg.rm_anova(
             dv=dep_var,
@@ -138,7 +138,7 @@ for part in time_vals:
             data=part_df
         )
         pg.print_table(part_rm)
-        
+
         # do posthoc
         ph = pg.pairwise_tukey(
             dv=dep_var,
@@ -147,20 +147,20 @@ for part in time_vals:
         )
         pg.print_table(ph)
         ph_part_dict[key] = ph
-        
+
         stage_test_dir = part_dir / key
         anova_file = stage_test_dir / "01_anova.csv"
         ph_file = stage_test_dir / "02_posthoc.csv"
-        
+
 #        part_rm.to_csv(anova_file)
 #        ph.to_csv(ph_file)
-    
+
     ph_part_df = pd.concat(ph_part_dict)
     ph_total_dict[part] = ph_part_df
 ph_total_df = pd.concat(ph_total_dict)
 ph_total_df = ph_total_df.reorder_levels([1, 0, 2])
 
-################################################################################
+##########################################################################
 # Plotting #
 fig = plt.figure()
 
@@ -192,21 +192,21 @@ markerscale = 0.5
 # on a single axis plot a single days delta
 for day, curr_ax in zip(days, day_axes):
     day_data = delta_df.loc[idx[:, day, ders[0]], :]
-    
+
     # remove artefacts and separate into stages to loop through
     stages_list = plot._create_plot_ready_stages_list(day_data)
-    
+
     # plot each stage one by one on the axis
     for stage_data in stages_list:
         # resample to remove interpolation lines
         curr_data = stage_data.resample(BASE_FREQ, level=3).mean()
-        
+
         label = stage_data.iloc[0, label_col]
         curr_ax.plot(
             curr_data,
             label=label
         )
-    
+
     dark_index = curr_data.between_time("12:00:00", "23:59:00").index
     if day == days[0]:
         alpha = 0.3
@@ -223,7 +223,7 @@ for day, curr_ax in zip(days, day_axes):
             linestyle='--',
             color='k'
         )
-    
+
     min_time = '2018-01-01 00:00:00'
     max_time = '2018-01-02 00:00:00'
     max_ylim = 4000
@@ -295,14 +295,14 @@ tot_panel_dict = dict(zip(totals_dict.keys(), tot_panels))
 
 # plot each of total/light/dark on axes for each day
 for count_label, curr_total_ax in zip(totals_dict.keys(), totals_axes):
-    
+
     count_data = totals_dict[count_label]
     # tidy up the data
     # change units to s
-    converted_count = count_data #((count_data * 4) / 60) / 60
+    converted_count = count_data  # ((count_data * 4) / 60) / 60
     totals_plotting_data = converted_count.stack().reset_index()
     totals_plotting_data.columns = plotting_columns
-    
+
     # plot data as a boxplot with individual points
     sns.boxplot(
         hue=day_col,
@@ -313,7 +313,7 @@ for count_label, curr_total_ax in zip(totals_dict.keys(), totals_axes):
         order=order,
         fliersize=0
     )
-    
+
     sns.stripplot(
         hue=day_col,
         y=sum_data,
@@ -323,28 +323,27 @@ for count_label, curr_total_ax in zip(totals_dict.keys(), totals_axes):
         dodge=True,
         order=order
     )
-    
+
     # modify the legend
     ax_leg = curr_total_ax.legend()
     ax_leg.remove()
-    
+
     # separate the days by a line
     curr_total_ax.axvline(0.5, color="k", alpha=0.5)
     curr_total_ax.axvline(1.5, color="k", alpha=0.5)
-    
+
     # set REM ymax
     ymax = 16
     if count_label == "REM":
         ymax = 3
     curr_total_ax.set(ylim=[0, ymax], ylabel="", xlabel="")
-    
-    
+
     # set the title for the column
     if curr_total_ax == totals_axes[0]:
         curr_total_ax.set_title("Time in stage per part of day")
     if curr_total_ax != totals_axes[-1]:
         curr_total_ax.set_xticklabels("")
-    
+
     curr_total_ax.text(
         1.0,
         0.5,
@@ -375,7 +374,7 @@ for count_label, curr_total_ax in zip(totals_dict.keys(), totals_axes):
         ycoord_data_val_day1,
         ycoord_data_val_day2
     ]
-    
+
     # get x value from tests
     ph_stage = ph_total_df.loc[count_label]
     sig_day1 = plot.sig_locs_get(ph_stage)
@@ -383,7 +382,7 @@ for count_label, curr_total_ax in zip(totals_dict.keys(), totals_axes):
 
     # get xdict to look up values
     label_loc_dict = plot.get_xtick_dict(curr_total_ax)
-    
+
     # plot the significance lines
     for no, sig_dict in enumerate([sig_day1, sig_day2]):
         curr_plus_val = plus_vals[no]
@@ -398,7 +397,7 @@ for count_label, curr_total_ax in zip(totals_dict.keys(), totals_axes):
             curr_ax=curr_total_ax,
             color=curr_colour
         )
-        
+
 # put the legend for the entire right column
 ax_handles, ax_labels = curr_total_ax.get_legend_handles_labels()
 fig.legend(
@@ -429,7 +428,7 @@ fig.suptitle(
 )
 fig.set_size_inches(11.69, 8.27)
 
-#plt.savefig(SAVEFIG, dpi=600)
+# plt.savefig(SAVEFIG, dpi=600)
 
 
-#plt.close('all')
+# plt.close('all')

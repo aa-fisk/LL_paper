@@ -12,9 +12,9 @@ output_edf_dir = input_edf_dir.parent / "02_cropped"
 
 
 def crop_edf_to_24_hours(
-        input_edf_path, 
-        output_edf_path, 
-        file_num, 
+        input_edf_path,
+        output_edf_path,
+        file_num,
         total_files):
     """
     Crop the EDF file to the first 24 hours of data and save it.
@@ -29,10 +29,10 @@ def crop_edf_to_24_hours(
     signals, signal_headers, header = pyedflib.highlevel.read_edf(
         str(input_edf_path)
     )
-    
+
     # Determine the sampling frequency from the first signal
     sample_rate = signal_headers[0]['sample_rate']
-    
+
     # Calculate the number of samples corresponding to 24 hours
     max_samples = int(24 * 60 * 60 * sample_rate)
 
@@ -49,14 +49,14 @@ def crop_edf_to_24_hours(
 
     print(f"Processed file {file_num}/{total_files}: {input_edf_path.name}")
 
+
 if __name__ == "__main__":
-    # List all edf files in input dir 
+    # List all edf files in input dir
     file_list = list(input_edf_dir.glob("*.edf"))
-    total_files = len(file_list) 
-    
+    total_files = len(file_list)
+
     for i, file in enumerate(file_list):
         input_edf_path = file
         output_edf_path = output_edf_dir / str(file.stem + ".edf")
 
         crop_edf_to_24_hours(input_edf_path, output_edf_path, i, total_files)
-        

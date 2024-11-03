@@ -49,5 +49,3 @@ plot_kwargs = {
 }
 # Now loop over every object in test_processed_list and plot_hypnogram
 hypnogram_object.create_plot(**plot_kwargs)
-
-

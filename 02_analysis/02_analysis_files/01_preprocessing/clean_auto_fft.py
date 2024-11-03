@@ -1,5 +1,5 @@
 import pdb
-import numpy as np 
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -8,8 +8,8 @@ from pathlib import Path
 annotation_dir_path = Path(
     '/Users/angusfisk/Documents/01_personal_files/01_work/'
     '11_LL_paper/02_analysis/01_data_files/11_somnotate/02_auto_states/'
-)  
-fft_dir_path = annotation_dir_path.parents[1] / '06_fft_files' / '01_script' 
+)
+fft_dir_path = annotation_dir_path.parents[1] / '06_fft_files' / '01_script'
 save_dir_path = annotation_dir_path.parents[1] / \
     '07_clean_fft_files' / '01_script'
 sampling_rate = 256  # Sampling rate in Hz
@@ -17,10 +17,12 @@ window_length = 4  # Length of the window in seconds
 channels = ['fro', 'occ', 'foc']  # Example channel names
 
 # Load sleep state annotations
+
+
 def load_annotations(file_path):
     annotations_df = pd.read_csv(
         file_path, delimiter='\t', skiprows=2,
-        header=None, names=['State','Time']
+        header=None, names=['State', 'Time']
     )
     annotations_df['Time'] = pd.to_datetime(
         annotations_df['Time'], unit='s'
@@ -28,10 +30,13 @@ def load_annotations(file_path):
     return annotations_df
 
 # Convert annotations to a regular 4-second time index
-def convert_annotations_to_time_index(annotations_df, window_length, file_stem):
+
+
+def convert_annotations_to_time_index(
+        annotations_df, window_length, file_stem):
     date_str = file_stem[-6:]  # Last 6 characters
     start_date = pd.to_datetime(date_str, format='%y%m%d')
-    
+
     # Adjust annotation times to start from the filename stem date
     annotations_df['Time'] += (start_date - annotations_df['Time'].min())
 
@@ -43,34 +48,37 @@ def convert_annotations_to_time_index(annotations_df, window_length, file_stem):
     )
 
     sleep_states = pd.DataFrame(index=time_index, columns=['State'])
-    
+
     for i in range(len(annotations_df)):
-        
-        # grab the state and the correct start time 
+
+        # grab the state and the correct start time
         if i == 0:
             current_time = annotations_df['Time'].iloc[i]
-        else: 
-            current_time = annotations_df['Time'].iloc[i-1]
+        else:
+            current_time = annotations_df['Time'].iloc[i - 1]
         state = annotations_df['State'].iloc[i]
-        
-        # grab the correct finish time for current state 
+
+        # grab the correct finish time for current state
         next_time = annotations_df['Time'].iloc[i]
         mask = (time_index >= current_time) & (time_index < next_time)
         sleep_states.loc[mask, 'State'] = state
 
     sleep_states['State'] = sleep_states['State'].ffill()
-    
-    # Define the cutoff for the first 24 hours, excluding the exact 24-hour mark
+
+    # Define the cutoff for the first 24 hours, excluding the exact 24-hour
+    # mark
     cutoff_time = start_date + pd.Timedelta(hours=24)
     sleep_states = sleep_states[sleep_states.index < cutoff_time]
 
     return sleep_states
 
 # Load FFT values
+
+
 def load_fft_values(file_path, start_date):
     # Read FFT DataFrame with the first two columns as the index
     fft_df = pd.read_csv(file_path, index_col=[0, 1])
-    
+
     # Get the length of the first channel
     num_rows = fft_df.shape[0] // len(channels)
 
@@ -88,22 +96,24 @@ def load_fft_values(file_path, start_date):
     # Assign the MultiIndex to the DataFrame
     fft_df = fft_df.loc[:, fft_df.columns[1:]]  # Keep relevant columns
     fft_df.index = multi_index
-    
-    fft_df.drop(columns=['Window'], inplace=True)    
 
-    # Define the cutoff for the first 24 hours, 
+    fft_df.drop(columns=['Window'], inplace=True)
+
+    # Define the cutoff for the first 24 hours,
     # excluding the exact 24-hour mark
     cutoff_time = new_index[0] + pd.Timedelta(hours=24)
     first_24_hours = new_index[new_index < cutoff_time]
-    
+
     # Ensure the selection is valid for the MultiIndex
     fft_df = fft_df.loc[
         fft_df.index.get_level_values('Window').isin(first_24_hours)
-    ]    
-    
+    ]
+
     return fft_df
 
 # Main processing for multiple files
+
+
 def process_files(annotation_dir_path, fft_dir_path):
     combined_data = {}  # Dictionary to hold DataFrames for each animal
     # Get all annotation files
@@ -112,12 +122,12 @@ def process_files(annotation_dir_path, fft_dir_path):
     # Extract unique animal IDs from annotation file stems
     unique_animals = {file.stem[:3] for file in annotation_files}
     print(f"Processing data for unique animals: {unique_animals}")
-    
+
     # Initialize a counter
     total_files = len(unique_animals)
-    
+
     for index, animal_id in enumerate(unique_animals):
-        
+
         # Get all annotation files for the current animal
         matching_annotation_files = list(
             annotation_dir_path.glob(f"{animal_id}*.hyp")
@@ -125,17 +135,17 @@ def process_files(annotation_dir_path, fft_dir_path):
 
         # Initialize DataFrame for the current animal
         combined_data[animal_id] = pd.DataFrame()
-        
-        # counter of days 
-        total_days = len(matching_annotation_files)  
-        for index_1, annotation_file in enumerate(matching_annotation_files): 
-        
+
+        # counter of days
+        total_days = len(matching_annotation_files)
+        for index_1, annotation_file in enumerate(matching_annotation_files):
+
             file_stem = annotation_file.stem
             matching_fft_files = list(
                 fft_dir_path.glob(f"{file_stem}*.csv")
             )
-           
-            print(f"Processing{file_stem}") 
+
+            print(f"Processing{file_stem}")
 
             if matching_fft_files:
                 annotations_df = load_annotations(annotation_file)
@@ -147,21 +157,21 @@ def process_files(annotation_dir_path, fft_dir_path):
                 sleep_states_df = convert_annotations_to_time_index(
                     annotations_df, window_length, file_stem
                 )
-                
+
                 for fft_file in matching_fft_files:
-                    start_date = pd.to_datetime(file_stem[-6:], 
-                                                 format='%y%m%d')
+                    start_date = pd.to_datetime(file_stem[-6:],
+                                                format='%y%m%d')
                     fft_df = load_fft_values(fft_file, start_date)
-                   
+
                     for channel in channels:
                         # Filter FFT values for the current channel
                         channel_fft_df = fft_df.xs(channel, level='Channel')
-                        
-                        # Merge sleep states with the specific 
+
+                        # Merge sleep states with the specific
                         # channel's FFT values
                         combined_temp_df = pd.merge_asof(
                             sleep_states_df.reset_index(),
-                            channel_fft_df.reset_index(), left_on='index', 
+                            channel_fft_df.reset_index(), left_on='index',
                             right_on='Window', direction='forward'
                         )
 
@@ -170,20 +180,19 @@ def process_files(annotation_dir_path, fft_dir_path):
 
                         # Drop the "Window" column
                         combined_temp_df.drop(columns=['Window'], inplace=True)
-                        
+
                         # Concatenate to the animal's DataFrame
                         combined_data[animal_id] = pd.concat(
-                            [combined_data[animal_id], combined_temp_df], 
+                            [combined_data[animal_id], combined_temp_df],
                             ignore_index=True
                         )
 
             # Print progress
             print(f"Processed {index_1 + 1}/{total_days} days.")
-            
 
         # Print progress
         print(f"Processed {index + 1}/{total_files} animals.")
-    
+
     # Save to separate files for each channel
     for animal_id, df in combined_data.items():
         for channel in channels:
@@ -194,16 +203,13 @@ def process_files(annotation_dir_path, fft_dir_path):
                 save_file_path = channel_dir / f"{animal_id}.csv"
                 channel_df.to_csv(save_file_path, index=False)
                 print(
-                    f"Saved DataFrame for {animal_id}"   
+                    f"Saved DataFrame for {animal_id}"
                     f"- {channel} to {save_file_path}"
                 )
 
     return combined_data
 
+
 if __name__ == "__main__":
     # Run the processing
     final_combined_df = process_files(annotation_dir_path, fft_dir_path)
-
-
-
-

@@ -2,22 +2,22 @@
 # Comparing the spectrum in zt 12-18 in the first two days in LL
 
 # imports
+import actiPy.preprocessing as aprep
+import actiPy.episodes as ep
+import sleepPy.plots as plot
+import sleepPy.preprocessing as prep
+import sys
+import pathlib
 import pandas as pd
 import numpy as np
 import pingouin as pg
 import matplotlib
-#matplotlib.use('macosx')
+# matplotlib.use('macosx')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
 import matplotlib.dates as mdates
 import seaborn as sns
 sns.set()
-import pathlib
-import sys
-import sleepPy.preprocessing as prep
-import sleepPy.plots as plot
-import actiPy.episodes as ep
-import actiPy.preprocessing as aprep
 
 # define constants
 INDEX_COLS = [0, 1, 2]
@@ -46,7 +46,7 @@ stage_names = sorted(stage_dir.glob("*.csv"))
 stage_list = [
     prep.read_file_to_df(x,
                          parse_dates=True,
-                         index_col=[0]) for x in stage_names ]
+                         index_col=[0]) for x in stage_names]
 stage_dfnames = [x.name for x in stage_list]
 stage_dict = dict(zip(stage_dfnames, stage_list))
 stage_df = pd.concat(stage_dict)
@@ -55,9 +55,9 @@ stage_df = stage_df.loc[:, :"LL_day2"]
 # Step 2 select just the right ZTs
 der = 'fro'
 zt_slice = spectrum_df.loc[
-           idx["LL2":, :, der, "2018-01-01 12:00:00":"2018-01-01 17:00:00"],
-           : # removes LL2
-           ]
+    idx["LL2":, :, der, "2018-01-01 12:00:00":"2018-01-01 17:00:00"],
+    :  # removes LL2
+]
 
 # Step 3 Select just the state of interest - wake and NREM
 nrem_mask = zt_slice["Stage"] == "NR"
@@ -123,7 +123,7 @@ nr_ep_mean = nr_episodes_df.groupby(
     loffset=OFFSET
 ).mean() / 60
 nr_ep_mean_slice = nr_ep_mean.loc[
-                   idx[:, "2018-01-01 00:30":"2018-01-01 23:30"], :]
+    idx[:, "2018-01-01 00:30":"2018-01-01 23:30"], :]
 long_mean = nr_ep_mean_slice.stack().reset_index()
 long_frag = long_sum.copy()
 frag_cols = [
@@ -136,7 +136,7 @@ long_frag.columns = frag_cols
 long_frag["Mean"] = long_mean.iloc[:, -1]
 
 
-# Stats ########################################################################
+# Stats ##################################################################
 
 save_test_dir = pathlib.Path("../../"
                              "03_analysis_outputs/05_figures/00_csvs/04_fig4")
@@ -219,7 +219,7 @@ mean_ph_name = save_test_dir / "03_mean_ph.csv"
 mean_ph.to_csv(mean_ph_name)
 
 
-# Plotting #####################################################################
+# Plotting ###############################################################
 # figure constants
 anim_col = cols[0]
 # animals = long_nrem[anim_col].unique()
@@ -248,7 +248,6 @@ panel_xpos = -0.1
 panel_ypos = 1.1
 
 
-
 # Initialise figure
 fig = plt.figure()
 
@@ -264,8 +263,8 @@ spectrum_axes = [plt.subplot(x) for x in spectrum_grid]
 days = long_nrem[lights].unique()
 curr_ax_spec = spectrum_axes[0]
 for curr_day in days:
-    curr_day_data = long_nrem.query("%s == '%s'" %(lights, curr_day))
-    
+    curr_day_data = long_nrem.query("%s == '%s'" % (lights, curr_day))
+
     curr_ax_spec.plot(
         curr_day_data[freq],
         curr_day_data[power]
@@ -276,7 +275,7 @@ for curr_day in days:
         curr_day_data[power] + curr_day_data["SEM"],
         alpha=0.5
     )
-    
+
 curr_ax_spec.set_yscale("log")
 spec_leg = curr_ax_spec.legend()
 spec_leg.remove()
@@ -294,13 +293,13 @@ curr_ax_spec.set_ylabel(
     "EEG power density, µV$^2$/0.25Hz +/-SEM"
 )
 curr_ax_spec.set_xlabel(
-        "Frequency"
+    "Frequency"
 )
 fig.text(
     0.5,
     1.05,
     "NREM power spectra",
-    transform = curr_ax_spec.transAxes,
+    transform=curr_ax_spec.transAxes,
     ha='center'
 )
 # add in panel position
@@ -324,7 +323,7 @@ frag_axes = [plt.subplot(x) for x in frag_grid]
 
 frag_xticklabels = long_frag[time_col][::3].dt.strftime("%H:%M")
 for type, curr_ax_frag in zip(frag_data_types, frag_axes):
-    
+
     sns.pointplot(
         x=time_col,
         y=type,
@@ -358,10 +357,11 @@ fig.text(
 )
 frag_labelsize = 10
 frag_axes[0].set_ylabel("Number of NREM episodes per hour, \n No. +/-SEM",
-        fontsize=frag_labelsize)
+                        fontsize=frag_labelsize)
 frag_axes[0].set_xlabel("")
-frag_axes[1].set_ylabel("Mean duration of NREM episodes per hour, \n minutes, +/-SEM",
-        fontsize=frag_labelsize)
+frag_axes[1].set_ylabel(
+    "Mean duration of NREM episodes per hour, \n minutes, +/-SEM",
+    fontsize=frag_labelsize)
 frag_axes[1].set_xlabel("Time of day, CT hours")
 
 for curr_ax, curr_panel in zip(frag_axes, ["B", "C"]):
@@ -372,7 +372,7 @@ for curr_ax, curr_panel in zip(frag_axes, ["B", "C"]):
         transform=curr_ax.transAxes,
         ha='right'
     )
-    
+
 # add stats to count levels
 ylevel_day1 = 0.9
 ylevel_day2 = 0.95
@@ -393,7 +393,7 @@ ycoord_day2 = plot.sig_line_coord_get(
 # get xvals where sig
 sig_day1 = [x.strftime("%H:%M") for x in plot.sig_locs_get(count_ph)]
 sig_day2 = [x.strftime("%H:%M")
-            for x in plot.sig_locs_get(count_ph,index_level2val=1)]
+            for x in plot.sig_locs_get(count_ph, index_level2val=1)]
 
 label_loc_dict = plot.get_xtick_dict(frag_axes[1])
 

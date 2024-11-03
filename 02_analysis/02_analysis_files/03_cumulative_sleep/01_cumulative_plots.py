@@ -14,18 +14,18 @@ plot_subdir_name = "03_analysis_outputs/02_cumulative_plots/01_cumulative_sleep"
 plot_subdir_path = prep.create_subdir(save_dir, plot_subdir_name)
 
 init_kwargs = {
-    "input_directory":input_dir,
-    "save_directory":save_dir,
-    "subdir_name":subdir_name,
-    "func":(prep, "read_file_to_df"),
-    "search_suffix":".csv",
-    "readfile":True,
-    "index_col":[0,1,2],
-    "header":[0]
+    "input_directory": input_dir,
+    "save_directory": save_dir,
+    "subdir_name": subdir_name,
+    "func": (prep, "read_file_to_df"),
+    "search_suffix": ".csv",
+    "readfile": True,
+    "index_col": [0, 1, 2],
+    "header": [0]
 }
 cumulative_sleep_object = prep.SaveObjectPipeline(**init_kwargs)
 
-process_kwargs ={
+process_kwargs = {
     "function": (prep, "create_stage_df"),
     "savecsv": True,
 }
@@ -42,7 +42,7 @@ plot_kwargs = {
     "showfig": False,
     "savefig": True,
     "legend_loc": "center right",
-    "figsize": (10,10),
+    "figsize": (10, 10),
     "ylabel": "Cumulative sleep, (hours)"
 }
 cumulative_sleep_object.create_plot(**plot_kwargs)

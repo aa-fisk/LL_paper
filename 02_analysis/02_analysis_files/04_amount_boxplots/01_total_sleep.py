@@ -1,4 +1,7 @@
 # Standard Imports
+import seaborn as sns
+import sleepPy.plots as plot
+import sleepPy.preprocessing as prep
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,15 +9,12 @@ import pathlib
 import sys
 sys.path.insert(0, "/Users/angusfisk/Documents/01_PhD_files/"
                    "07_python_package/sleepPy")
-import sleepPy.preprocessing as prep
-import sleepPy.plots as plot
-import seaborn as sns
 sns.set()
 
 # Step one, get the data ready
 # import the files into a list
 input_dir = pathlib.Path("/Users/angusfisk/Documents/01_PhD_files/01_projects"
-                        "/01_thesisdata/03_lleeg/01_data_files/08_stage_csv")
+                         "/01_thesisdata/03_lleeg/01_data_files/08_stage_csv")
 file_list = sorted(input_dir.glob("*.csv"))
 
 read_kwargs = {"index_col": [0],
@@ -32,12 +32,12 @@ save_name = "01_total_sleep.png"
 sleep_count_df = prep.lightdark_df(df_list=df_list,
                                    stage_list=stage_list)
 
-### HACK AS HAVEN'T FINISHED SCORING
+# HACK AS HAVEN'T FINISHED SCORING
 # sleep_count_df.iloc[4, -1] = 12000
 
 # Step three: convert to hours
 sleep_hours = prep.convert_to_units(sleep_count_df,
-                                    base_freq= "4S",
+                                    base_freq="4S",
                                     target_freq="1H")
 # convert to long form data
 data = sleep_hours.stack().reset_index()
@@ -58,7 +58,6 @@ save_dir = pathlib.Path('/Users/angusfisk/Documents/01_PhD_files/01_projects/'
                         '/04_amounts')
 save_plot = save_dir / save_name
 plt.savefig(save_plot)
-
 
 
 sns.pointplot(x=x, y=y, hue=hue, data=data, ci=68)

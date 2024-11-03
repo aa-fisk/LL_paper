@@ -1,5 +1,5 @@
 import pyedflib
-import pdb 
+import pdb
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -7,16 +7,16 @@ from pathlib import Path
 # Parameters
 
 input_directory = Path(
-        '/Users/angusfisk/Documents/01_personal_files/01_work/'
-        '11_LL_paper/02_analysis/01_data_files/01_edf/03_test'
+    '/Users/angusfisk/Documents/01_personal_files/01_work/'
+    '11_LL_paper/02_analysis/01_data_files/01_edf/03_test'
 )
 output_directory = input_directory.parents[1] / '06_fft_files' / '01_script'
 sampling_rate = 256  # Sampling rate in Hz
 window_length = 4  # Length of the window in seconds
-window_samples = window_length * sampling_rate  
-    # Number of samples in the window
+window_samples = window_length * sampling_rate
+# Number of samples in the window
 freq_bin_size = 0.25  # Size of frequency bins in Hz
-freq_limit = 20 #frequency limit in Hz
+freq_limit = 20  # frequency limit in Hz
 
 # Create output directory if it doesn't exist
 output_directory.mkdir(exist_ok=True)
@@ -25,6 +25,8 @@ output_directory.mkdir(exist_ok=True)
 channel_name_mapping = {0: "fro", 1: "occ", 2: "foc"}
 
 # Function to process a single EDF file
+
+
 def process_edf_file(edf_file_path):
     # Get the filename stem for output
     filename_stem = edf_file_path.stem
@@ -46,7 +48,7 @@ def process_edf_file(edf_file_path):
 
             # Frequency array for FFT
             frequencies = np.fft.fftfreq(
-                    window_samples, d=1/sampling_rate
+                window_samples, d=1 / sampling_rate
             )[:window_samples // 2]
 
             # Process each window
@@ -57,10 +59,10 @@ def process_edf_file(edf_file_path):
 
                 # Perform FFT
                 fft_result = np.fft.fft(signal_window)
-                magnitude = np.abs(fft_result[:window_samples // 2])  
-                    # Get magnitude for positive frequencies
+                magnitude = np.abs(fft_result[:window_samples // 2])
+                # Get magnitude for positive frequencies
 
-                # Filter frequencies and magnitudes 
+                # Filter frequencies and magnitudes
                 # to keep only those between 0 and 20 Hz
                 valid_indices = frequencies <= freq_limit
                 valid_frequencies = frequencies[valid_indices]
@@ -91,15 +93,16 @@ def process_edf_file(edf_file_path):
 
     # Pivot the DataFrame to have frequencies as columns
     pivoted_df = results_df.pivot_table(
-            index=['Channel', 'Window'], 
-            columns='Frequency (Hz)', 
-            values='Magnitude', fill_value=0
+        index=['Channel', 'Window'],
+        columns='Frequency (Hz)',
+        values='Magnitude', fill_value=0
     )
-       
+
     # Save the pivoted DataFrame to a single CSV file
     pivoted_df.to_csv(output_file_path)
 
     print(f"Saved all binned FFT results to {output_file_path}")
+
 
 # Process all EDF files in the input directory
 edf_files = list(input_directory.glob('*.edf'))

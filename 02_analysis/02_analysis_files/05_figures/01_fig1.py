@@ -1,20 +1,20 @@
 # Script for plotting PIR actogram
 
+import actiPy.periodogram as per
+import actiPy.preprocessing as prep
+import actiPy.actogram_plot as aplot
+import sys
+import matplotlib.dates as mdates
+import matplotlib.gridspec as gs
+import matplotlib.pyplot as plt
+import matplotlib
+import numpy as np
 import pathlib
 import pandas as pd
 idx = pd.IndexSlice
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gs
-import matplotlib.dates as mdates
-import sys
-import actiPy.actogram_plot as aplot
-import actiPy.preprocessing as prep
-import actiPy.periodogram as per
 
 fig_dir = pathlib.Path(
-   "../../03_analysis_outputs/05_figures/01_fig1" 
+    "../../03_analysis_outputs/05_figures/01_fig1"
 )
 
 # Import data
@@ -94,7 +94,7 @@ fig, ax = aplot._actogram_plot_from_df(
 )
 fig.subplots_adjust(hspace=0)
 a4 = [8.27, 11.69]
-quarter = [x/2 for x in a4]
+quarter = [x / 2 for x in a4]
 fig.set_size_inches(quarter[0], quarter[1])
 # Save actogram
 save_fig = fig_dir / "03_actogram.png"
@@ -114,11 +114,9 @@ fig, ax = aplot._actogram_plot_from_df(
 )
 fig.subplots_adjust(hspace=0)
 a4 = [8.27, 11.69]
-quarter = [x/2 for x in a4]
+quarter = [x / 2 for x in a4]
 fig.set_size_inches(quarter[0], quarter[1])
 save_fig = fig_dir / "05_actogram_lights.png"
 plt.savefig(save_fig, dpi=600, transparent=True)
 
 # Save actogram
-
-
