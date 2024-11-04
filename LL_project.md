@@ -21,11 +21,15 @@ Have script that calculates (hopefully) correct numbers
 - Save file so don't have to run whole calculation every time
 - Plot output 
 
-- how do for sleep total 
-- so how do I want to save? separate dfs? separate columns in 
-same df? 
+- okay plot - all data lines plus mean and SEM on the same plot 
+do for each state separately 
 
-
+LL2 waaaay more sleep than everyone else 
+- scoring problem
+- free running period correction problem?
+    - Period is the longest at 25 hours but shouldn't cause this big 
+    a problem
+    - but the fact that baseline is normal does suggest this is the problem
 
 
 TODO
