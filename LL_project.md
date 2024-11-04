@@ -15,6 +15,16 @@ Scoring seems to be completely wrong? LL_project
 
 # Working notes 
 
+okay what do we want
+Have script that calculates (hopefully) correct numbers 
+- do for sleep/wake/REM
+- Save file so don't have to run whole calculation every time
+- Plot output 
+
+- how do for sleep total 
+- so how do I want to save? separate dfs? separate columns in 
+same df? 
+
 
 
 
@@ -25,6 +35,8 @@ TODO
     - add pyedflib
 - correct for free running period? 
 - label as baseline/ll1,2,3 etc.
+- Use wavelet analysis for period detection (also finds non-stationary periods)
+- add autopep8 to make file?
 
 
 What's next?
