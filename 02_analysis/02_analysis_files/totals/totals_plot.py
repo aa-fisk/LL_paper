@@ -19,10 +19,12 @@ data = pd.read_csv(file, index_col=0, parse_dates=True) / 60**2
 data.columns = data.columns.str.strip() # remove whitespaces
 
 for curr_state in states:
+    # remove last day of data
+    data_minus = data.iloc[:-1]
     # use regex pattern to capture just the curr state
     regex_pattern = fr"_(?<!non-)({curr_state})$"
-    data_state = data.filter(regex=(regex_pattern))
-    print(data_state.head())
+    data_state = data_minus.filter(regex=(regex_pattern))
+    print(data_state.tail())
 
     # Plot individual lines with 0.5 opacity
     fig, ax = plt.subplots(figsize=(15,10))
@@ -67,7 +69,7 @@ for curr_state in states:
     # Show the plot
     plt.tight_layout()
     #plt.show()
-
+    
     # Save the plot 
     fig.set_size_inches(15, 10)
     save_name = import_dir / f"{curr_state}.png"
