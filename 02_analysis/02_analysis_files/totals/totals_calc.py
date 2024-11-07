@@ -18,15 +18,36 @@ corrected_files = list(corrected_dir.glob("*.csv"))
 baseline_day = "2018-04-09"
 
 
-# Define a function to calculate state count per 24 hours
-def calculate_state_count(
-        data,
-        state_col="State",
-        state="non-REM",
-        start_time="07:00:00"):
-    # Resample data to 24-hour periods and calculate state count
+def calculate_state_count(data, state_col="State", state="non-REM",
+                          start_time="07:00:00", part="total"):
+    """
+    Calculate state counts for a given part (total, light, dark).
+
+    Parameters:
+    - data: DataFrame containing the time-series data
+    - state_col: The column representing the state (default 'State')
+    - state: The specific state to calculate counts for (default 'non-REM')
+    - start_time: The offset time for 24-hour periods (default '07:00:00')
+    - part: 'total', 'light', or 'dark' to specify time range
+
+    Returns:
+    - state_seconds: Series of state durations in seconds
+    """
     state_mask = data[state_col] == state
-    state_count = state_mask.resample("24h", offset=start_time).sum()
+    
+    if part == "total":
+        # Resample data for 24-hour parts
+        state_count = state_mask.resample("24h", offset=start_time).sum()
+    elif part == "light":
+        # First 12 hours (midnight to noon)
+        state_count = state_mask.between_time("00:00", "11:59").resample(
+            "24h", offset=start_time).sum()
+    elif part == "dark":
+        # Second 12 hours (noon to midnight)
+        state_count = state_mask.between_time("12:00", "23:59").resample(
+            "24h", offset=start_time).sum()
+    
+    # Convert state count to seconds (assuming 4s intervals)
     state_seconds = state_count * 4
     return state_seconds
 
@@ -34,7 +55,11 @@ def calculate_state_count(
 if __name__ == "__main__":
 
     # Initialize a list to hold the combined counts
-    combined_dict = {}
+    combined_dict_total = {}
+    combined_dict_light = {}
+    combined_dict_dark = {}
+    dict_list = [combined_dict_total, combined_dict_light, combined_dict_dark] 
+    part_list = ["total", "light", "dark"]
 
     # Iterate through each file in raw_files and corrected_files
     for raw_file, corrected_file in zip(raw_files, corrected_files):
@@ -50,23 +75,27 @@ if __name__ == "__main__":
         state_list = raw_data.iloc[:, 0].unique()
 
         for curr_state in state_list:
-            # Calculate the state counts for both raw and corrected datasets
-            raw_state_counts = calculate_state_count(
-                raw_data, state=curr_state)
-            corrected_state_counts = calculate_state_count(
-                corrected_data, state=curr_state)
+            # zip through all tipes 
+            for curr_dict, curr_part in zip(dict_list, part_list):
 
-            # Combine the counts for the current state across raw and corrected
-            # files
-            combined_counts = pd.concat(
-                [raw_state_counts[baseline_day], corrected_state_counts],
-            )
+                # Calculate the state counts for both raw and corrected datasets
+                raw_state_counts = calculate_state_count(
+                    raw_data, state=curr_state, part=curr_part)
+                corrected_state_counts = calculate_state_count(
+                    corrected_data, state=curr_state, part=curr_part)
 
-            # Add the combined counts to the dictionary
-            combined_dict[f"{raw_file.stem}_{curr_state}"] = combined_counts
+                # Combine the counts for the current state across raw and corrected
+                # files
+                combined_counts = pd.concat(
+                    [raw_state_counts[baseline_day], corrected_state_counts],
+                )
+
+                # Add the combined counts to the dictionary
+                curr_dict[f"{raw_file.stem}_{curr_state}"] = combined_counts
 
     # Create a DataFrame with the combined counts
-    df_combined_counts = pd.concat(combined_dict, axis=1)
+    for curr_dict, curr_part in zip(dict_list, part_list):
+        df_combined_counts = pd.concat(curr_dict, axis=1)
 
-    save_name = save_dir / "total_states.csv"
-    df_combined_counts.to_csv(save_name)
+        save_name = save_dir / f"{curr_part}_states.csv"
+        df_combined_counts.to_csv(save_name)

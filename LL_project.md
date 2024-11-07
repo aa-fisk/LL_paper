@@ -15,15 +15,50 @@ Scoring seems to be completely wrong? LL_project
 
 # Working notes 
 
-okay what do we want
-Have script that calculates (hopefully) correct numbers 
-- do for sleep/wake/REM
-- Save file so don't have to run whole calculation every time
-- Plot output 
+### Current plans 
+- Make total sleep/REM/non-REM plots 
+- Do totals for light/dark split 
+- Plot amount of sleep per hour 
+- Plot cumulative NREM sleep per hour 
+- Plot SWA per hour
+- Plot cumulative SWE per hour 
+- plot single plot for each individual animal to start (too busy to have 
+all animals on single plot) 
+    - Then plot mean +/- SEM for group as a whole 
 
-- okay plot - all data lines plus mean and SEM on the same plot 
-do for each state separately 
 
+### current notes 
+Do I want to put light/dark split on the same plot as totals?
+- Getting busy having all animals on one plot for 3 different time series 
+- can just do same thing for light and dark? 
+    - but then difficult to compare as have to look at plot
+    - unless force shared y axis 
+- Options
+    - Individual animal total/light/dark with separate plot for mean +/- SEM
+    for all
+        - REM - total - LL1 .... Mean
+              - Light - LL1 .... Mean
+              - Dark - LL1 .... Mean
+        - non-REM - ...
+    - Total/light/dark with individual traces and mean and SEM on each
+        - REM - Total, light, dark
+        - non-REM - Total, light, dark
+    - One plot with total/light/dark on single plot 
+        - REM plot, non-REM plot, Wake plot
+    - think want option 2, best balance of all 
+    - Hmmm but nagging feeling good practice to have data for each 
+    individual animal as separate so can look into more 
+    - so option 1 it is 
+- So how do I do option 1? 
+    - Modify current total script or write new script?
+    - ah so because have separate calculation and plotting script
+    - first step is to calculate for just light and dark 
+    - ask chatgpt
+    - gives big ugle messy script, surely can do with zip? 
+
+
+
+### problems 
 LL2 waaaay more sleep than everyone else 
 - scoring problem
 - free running period correction problem?
@@ -32,7 +67,10 @@ LL2 waaaay more sleep than everyone else
     - but the fact that baseline is normal does suggest this is the problem
 
 
-TODO
+
+
+
+# TODO general
 - check how well scoring has done 
 - graph all days by vigilance state (fig 2? from paper )
 - write notes on pipeline 
@@ -41,6 +79,7 @@ TODO
 - label as baseline/ll1,2,3 etc.
 - Use wavelet analysis for period detection (also finds non-stationary periods)
 - add autopep8 to make file?
+- add proper docstrings to functions 
 
 
 What's next?

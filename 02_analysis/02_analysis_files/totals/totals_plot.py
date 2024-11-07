@@ -14,21 +14,16 @@ import_dir = Path(
 file = list(import_dir.glob("*csv"))[0]
 states = ["awake", "non-REM", "REM"]
 
-# read in the data in hours
-data = pd.read_csv(file, index_col=0, parse_dates=True) / 60**2
-data.columns = data.columns.str.strip() # remove whitespaces
-
-for curr_state in states:
-    # remove last day of data
-    data_minus = data.iloc[:-1]
-    # use regex pattern to capture just the curr state
-    regex_pattern = fr"_(?<!non-)({curr_state})$"
-    data_state = data_minus.filter(regex=(regex_pattern))
-    print(data_state.tail())
+# create plotting function
+def plot_state(
+        data_state,
+        save_name,
+        showfig=True,
+        savefig=False):
 
     # Plot individual lines with 0.5 opacity
     fig, ax = plt.subplots(figsize=(15,10))
-    ax.plot(data_state.index.date, data_state.values, color='grey', alpha=0.5)
+    ax.plot(data_state.index.date, data_state.values, alpha=0.5)
 
     # Calculate the mean and SEM (Standard Error of the Mean)
     mean = data_state.mean(axis=1)
@@ -67,11 +62,31 @@ for curr_state in states:
     ax.legend()
 
     # Show the plot
-    plt.tight_layout()
-    #plt.show()
-    
-    # Save the plot 
-    fig.set_size_inches(15, 10)
-    save_name = import_dir / f"{curr_state}.png"
-    fig.savefig(save_name)
+    if showfig:
+        plt.tight_layout()
+        fig.set_size_inches(15, 10)
+        plt.show()
+
+    if savefig:
+        # save
+        fig.savefig(save_name)
+    plt.close(fig)
+
+
+if __name__ == "__main__":
+    # read in the data in hours
+    data = pd.read_csv(file, index_col=0, parse_dates=True) / 60**2
+    data.columns = data.columns.str.strip() # remove whitespaces
+
+    for curr_state in states:
+        # remove last day of data
+        data_minus = data.iloc[:-1]
+        # use regex pattern to capture just the curr state
+        regex_pattern = fr"_(?<!non-)({curr_state})$"
+        data_state = data_minus.filter(regex=(regex_pattern))
+        print(data_state.tail())
+        
+        save_name = import_dir / f"{curr_state}.png"
+        plot_state(data_state, save_name, showfig=False, savefig=True)
+
 
