@@ -55,6 +55,27 @@ Do I want to put light/dark split on the same plot as totals?
     - first step is to calculate for just light and dark 
     - ask chatgpt
     - gives big ugle messy script, surely can do with zip? 
+- Okay so good start but currently doing selection of first 12 hours then 
+the offset which is awkward because want the other way around, 
+- can't I just resample every 12 hours instead and then choose just the
+first/second
+- YES BUT aarrggh error handling
+- depends on when starts day? - wait no it doesn't, 7 is just the offset 
+so should handle it? 
+- what am I worried about? - if data recording started after 7pm that 
+will be selected as the light period instead of dark 
+- why is this one getting 19:00 as the start then? 
+- ah LL8 always causing me problems 
+- so data recording says it starts at 00:00:00 - where is this coming from? 
+- from clean_fft_files - this feels like an artefact then 
+
+#### Update 2024-11-08
+- Splitting into light/dark totals
+- Trying to understand what offset is doing and if doing what I want it to
+- Looking at clean_fft_files to figure out how timeindex constructed
+    - Is it arbitrary or when recording actually started?
+    - 
+
 
 
 

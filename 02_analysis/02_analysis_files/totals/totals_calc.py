@@ -40,12 +40,15 @@ def calculate_state_count(data, state_col="State", state="non-REM",
         state_count = state_mask.resample("24h", offset=start_time).sum()
     elif part == "light":
         # First 12 hours (midnight to noon)
-        state_count = state_mask.between_time("00:00", "11:59").resample(
-            "24h", offset=start_time).sum()
+        state_count_12 = state_mask.resample("12h", offset=start_time).sum()
+        state_count = state_count_12.iloc[::2]
+        state_count.index = state_count.index - pd.Timedelta("12h")
+        pdb.set_trace()
     elif part == "dark":
         # Second 12 hours (noon to midnight)
-        state_count = state_mask.between_time("12:00", "23:59").resample(
-            "24h", offset=start_time).sum()
+        state_count_12 = state_mask.resample("12h", offset=start_time).sum()
+        state_count = state_count_12.iloc[1::2]
+        pdb.set_trace()
     
     # Convert state count to seconds (assuming 4s intervals)
     state_seconds = state_count * 4
